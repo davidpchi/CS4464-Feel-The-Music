@@ -1,0 +1,59 @@
+<html>
+<head>
+	<title>Picture the News</title>
+	<script src="js/main.js"></script>
+	<script src="js/vendor/d3.v3.min.js"></script>
+	<script src="js/vendor/async.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+		google.load("feeds", "1") //Load Google Ajax Feed API (version 1)
+		google.load('search', '1');
+	</script>
+	<script>
+	$(function() {
+		$( document ).tooltip();
+	});
+	</script>
+	<style>
+	body {
+		background-color: black;
+	}
+	
+	h1 {
+		color: white;
+	}
+	
+	h2 {
+		color: white;
+	}
+	
+	label {
+		display: inline-block;
+		width: 5em;
+	}
+	</style>
+</head>
+<body onload="init()">
+	<center>
+	<h1>Picture the News</h1>
+	<h2>Currently Viewing:<div id="rss_name"></div></h2>
+	<div id="vis"></div>
+	<p>GT CS 4464 2014
+	</center>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-48485807-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</body>
+</html>
