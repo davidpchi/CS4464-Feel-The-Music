@@ -4,19 +4,91 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
 </script>
 <script>
+var temp;
+var finalWordList;
+
 $(document).ready(function(){
-  $("button").click(function(){
-    $.ajax({url:"demo_test.txt",success:function(result){
-      $("#div1").html(result);
-    }});
-  });
+	var wordListSeed = [{word:"happy", synonyms:[], count: 0}, 
+	{word:"sad", synonyms:[], count: 0}, 
+	{word:"angry", synonyms:[], count: 0}, 
+	{word:"nervous", synonyms:[], count: 0}, 
+	{word:"jealous", synonyms:[], count: 0}, 
+	{word:"excited", synonyms:[], count: 0}
+	]; 
+	
+	var myFunction = function(wordList, myWord) {
+		console.log(wordList);
+		wordList[myWord].count++;
+		$.ajax({
+			url:"http://thesaurus.altervista.org/thesaurus/v1",
+			dataType: "json",
+			type: "POST", 
+			dataType: "jsonp",
+			data: {key: "chsoIzxta7q3a6MCCUNS", word: wordList[myWord].word, language:"en_US", output:"json"},
+			success:function(result){
+				console.log("success");
+				temp = result;
+				for (var pop in result) {
+					var temp = result[pop]
+					for (var pop2 in temp) {
+						var listOfSyn = temp[pop2].list.synonyms.split("|");
+						for (var pop3 in listOfSyn) {
+							if (listOfSyn[pop3].indexOf("antonym") < 0) {								
+								var indexOfParen = listOfSyn[pop3].indexOf("(");
+								if (indexOfParen < 0) {
+									var newWord = {
+										word: listOfSyn[pop3],
+										synonyms: [],
+										count: wordList[myWord].count
+									}
+								} else {
+									var newWord = {
+										word: listOfSyn[pop3].substring(0,indexOfParen),
+										synonyms: [],
+										count: wordList[myWord].count
+									}
+								}
+								
+								wordList[myWord].synonyms[newWord.word] = newWord;
+
+								//console.log(wordList[myWord].synonyms);
+								if (wordList[myWord].count <= 1) {
+									myFunction(wordList[myWord].synonyms, newWord.word);
+								}
+							}
+						}
+					}
+				}
+			}
+		});
+	}
+	
+	for (var myWord in wordListSeed) {
+		(function(wordList, myWord) {
+			console.log(wordList[myWord]);
+			myFunction(wordList, myWord);
+		})(wordListSeed, myWord);
+	}
+	
+	finalWordList = wordListSeed;
 });
+
+function printFinalWordList(word) {
+	var independentList = finalWordList[word].synonyms;
+	
+	for (var temp in independentList) {
+	
+		console.log(independentList[temp].word);
+		
+		var independentList2 = independentList[temp].synonyms;
+		
+		for (var temp2 in independentList2) {
+			console.log(independentList2[temp2].word);
+		}
+	}
+}
 </script>
 </head>
 <body>
-
-<div id="div1"><h2>Let jQuery AJAX Change This Text</h2></div>
-<button>Get External Content</button>
-
 </body>
 </html>
