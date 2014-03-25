@@ -1,0 +1,484 @@
+Happy,Sad,Angry,Nervous,Jealous,Excited
+blessed  ,bittersweet  ,aggravated  ,tense  ,covetous ,aflutter  
+blest ,sad  ,intense  ,aroused  ,envious ,nervous 
+favored  ,semisweet ,provoked ,wound up  ,jealous ,excited  
+fortunate  ,tasty  ,angry  ,cliff-hanging  ,desirous  ,nervous  
+golden  ,bittersweet nightshade ,provoked  ,suspenseful  ,wishful  ,tense  
+glorious  ,climbing nightshade ,aggravated ,suspensive  ,avaricious ,anxious 
+Blessed ,deadly nightshade ,angry  ,nail-biting  ,grabby ,queasy 
+holy  ,poisonous nightshade ,angered  ,taut  ,grasping ,uneasy 
+blasted ,woody nightshade ,enraged ,edgy  ,greedy ,unquiet 
+blame ,Solanum dulcamara ,furious ,high-strung  ,prehensile ,troubled  
+blamed ,nightshade ,infuriated ,highly strung  ,acquisitive  ,neural 
+damn ,American bittersweet ,maddened ,in suspense  ,envious ,system  
+damned ,climbing bittersweet ,angry  ,jittery  ,covetous ,aflutter 
+darned ,false bittersweet ,enraged  ,jumpy  ,jealous ,excited  
+deuced ,staff vine ,angered ,nervy  ,desirous  ,skittish 
+goddam ,waxwork ,furious ,overstrung  ,wishful  ,flighty 
+goddamn ,shrubby bittersweet ,infuriated ,restive  ,desirous  ,spooky 
+goddamned ,Celastrus scandens ,maddened ,uptight  ,wishful ,excitable  
+infernal ,vine ,angry  ,electric  ,appetent  ,agog  
+cursed  ,depressing  ,furious  ,isotonic  ,athirst  ,excited  
+curst  ,blue ,ferocious ,nervous  ,hungry  ,crazy  
+beatified ,dark ,fierce ,strained  ,thirsty  ,brainsick 
+saved  ,dingy ,savage ,unrelaxed  ,avid  ,demented 
+happy  ,disconsolate ,violent  ,pumped-up  ,devouring  ,distracted 
+blessed with ,dismal ,angered ,pumped up  ,esurient  ,disturbed 
+endued with ,dispiriting ,enraged ,pumped  ,greedy  ,mad 
+endowed  ,gloomy ,infuriated ,wired  ,covetous  ,sick 
+blissful  ,grim ,maddened ,agitated  ,envious  ,unbalanced 
+happy  ,sorry ,angry  ,uneasy  ,jealous  ,unhinged 
+bright  ,drab ,angry ,constricted  ,wishful  ,insane  
+agleam  ,drear ,raging ,tight  ,desirous ,half-baked 
+gleaming  ,dreary ,tempestuous ,grammatical category ,appetent  ,screwball 
+nitid  ,cheerless  ,wild ,syntactic category ,athirst  ,softheaded 
+aglow  ,uncheerful  ,stormy  ,strain ,hungry  ,impractical  
+lambent  ,depressive ,infuriated  ,tighten ,thirsty  ,dotty 
+lucent  ,saddening ,angered ,change ,avid  ,gaga 
+luminous  ,sad  ,enraged ,alter ,devouring  ,enamored 
+aglitter  ,depressive  ,furious ,modify ,esurient  ,infatuated 
+coruscant  ,depressing ,maddened ,tense up ,greedy  ,in love 
+fulgid  ,gloomy ,angry  ,change state ,covetous  ,smitten 
+glinting  ,saddening ,maddened  ,turn ,envious  ,soft on 
+glistering  ,sad  ,angered ,affect ,jealous  ,taken with 
+glittering  ,sick person ,enraged ,anxious ,aspirant ,loving  
+glittery  ,diseased person ,furious ,dying ,aspiring ,excited  
+scintillant  ,sufferer ,infuriated ,eager  ,ambitious  ,strange  
+scintillating  ,gloomy  ,angry  ,nervous ,green-eyed ,unusual  
+sparkly  ,grim ,black  ,queasy ,jealous ,wild 
+beady  ,darkening ,dark  ,uneasy ,overjealous ,enthusiastic  
+beadlike  ,hopeless  ,African-American  ,unquiet ,distrustful  ,loony 
+buttony  ,blue ,Afro-American  ,troubled  ,overjealous ,looney 
+buttonlike  ,dark ,colored  ,queasy ,jealous ,weirdo 
+beaming  ,depressing ,coloured  ,nauseating ,green-eyed ,lunatic 
+beamy  ,dingy ,dark-skinned  ,nauseous ,distrustful  ,madman 
+effulgent  ,disconsolate ,non-white  ,noisome ,distrustful  ,maniac 
+radiant  ,dismal ,negro  ,loathsome ,cynical  ,fevered  
+refulgent  ,dispiriting ,negroid  ,offensive ,misanthropic  ,excited  
+blazing  ,sorry ,angry  ,sickening ,misanthropical  ,intoxicated  
+blinding  ,drab ,dark ,vile ,doubting  ,drunk 
+dazzling  ,drear ,sinister ,unwholesome  ,questioning  ,inebriated 
+fulgent  ,dreary ,evil  ,nauseated ,skeptical  ,bacchanalian  
+glaring  ,cheerless  ,bleak ,sick ,sceptical  ,bacchanal  
+glary  ,uncheerful  ,dim ,sickish ,jealous  ,bacchic  
+bright as a new penny  ,glooming ,hopeless  ,ill  ,green-eyed  ,carousing  
+brilliant  ,gloomful ,calamitous ,sick  ,overjealous  ,orgiastic  
+ardent  ,sulky ,disastrous ,anxious ,leery  ,beery  
+flashing  ,dark  ,fatal ,nervous ,mistrustful  ,besotted  
+glimmering  ,depressive ,fateful ,uneasy ,suspicious  ,blind drunk  
+glimmery  ,saddening ,unfortunate  ,unquiet ,untrusting  ,blotto  
+glistening  ,sad  ,blackened ,troubled  ,wary  ,crocked  
+glossy  ,glum ,colorful  ,uneasy ,misogynic  ,cockeyed  
+lustrous  ,long-faced ,pitch-black ,apprehensive  ,oversuspicious  ,fuddled  
+sheeny  ,dejected  ,pitch-dark ,worried  ,incredulous  ,loaded  
+shiny  ,saddening  ,grim ,precarious  ,,pie-eyed  
+shining  ,depressing ,mordant ,unstable  ,,pissed  
+iridescent  ,depressive ,sarcastic  ,tense  ,,pixilated  
+nacreous  ,gloomy ,covert  ,uncomfortable  ,,plastered  
+opalescent  ,sad  ,bootleg ,unquiet  ,,potty  
+opaline  ,doleful  ,black-market ,anxious ,,slopped  
+pearlescent  ,mournful ,contraband ,nervous ,,sloshed  
+lurid  ,sad  ,smuggled ,queasy ,,smashed  
+noctilucent  ,mournful  ,illegal  ,unquiet ,,soaked  
+self-luminous  ,plaintive ,disgraceful ,troubled  ,,soused  
+shimmery  ,sorrowful  ,ignominious ,restless ,,sozzled  
+silver  ,doleful ,inglorious ,awkward ,,squiffy  
+silvern  ,sad  ,opprobrious ,ill at ease ,,stiff  
+silvery  ,heavyhearted  ,shameful ,unquiet ,,tiddly  
+twinkling  ,sad  ,dishonorable  ,antsy  ,,tiddley  
+brilliant ,melancholy  ,dishonourable  ,fidgety  ,,tight  
+vivid ,melancholic ,undiluted  ,fretful  ,,tipsy  
+colorful  ,sad  ,clothed  ,itchy  ,,wet  
+colourful  ,somber ,clad  ,restless  ,,bibulous  
+smart ,sombre ,smutty ,disruptive  ,,boozy  
+intelligent  ,cheerless  ,dirty  ,riotous  ,,drunken  
+light  ,uncheerful  ,soiled  ,troubled  ,,sottish  
+burnished ,sadness ,unclean  ,tumultuous  ,,doped  
+lustrous ,unhappiness ,blackness ,turbulent  ,,drugged  
+shining ,depression ,inkiness ,squally  ,,narcotized  
+shiny ,black bile ,achromatic color ,squalling  ,,narcotised  
+polished  ,liquid body substance ,achromatic colour ,uneasy  ,,half-seas-over  
+glorious  ,bodily fluid ,total darkness ,agitated  ,,high  
+undimmed ,body fluid ,lightlessness ,wild  ,,mellow  
+reverberant  ,humor ,pitch blackness ,anxious ,,hopped-up  
+ringing  ,humour ,darkness ,nervous ,,stoned  
+happy  ,melancholic  ,Black ,queasy ,,excited  
+sunshiny ,melancholy ,Joseph Black ,uneasy ,,drunk  
+sunny ,sad  ,chemist ,troubled  ,,intoxicated 
+clear  ,melancholiac ,Shirley Temple Black ,annoyed  ,,inebriated 
+promising ,depressive ,Shirley Temple ,harassed  ,,bacchanalian  
+auspicious  ,pensive  ,actress ,harried  ,,bacchanal  
+brilliantly ,brooding ,Black person ,pestered  ,,bacchic  
+brightly ,broody ,blackamoor ,vexed  ,,carousing  
+golden  ,contemplative ,Negro ,anxious  ,,orgiastic  
+aureate ,meditative ,Negroid ,nervous  ,,beery  
+gilded ,musing ,person ,queasy  ,,besotted  
+gilt ,pondering ,individual ,uneasy  ,,blind drunk  
+gold ,reflective ,someone ,unquiet  ,,blotto  
+chromatic  ,ruminative ,somebody ,buffeted  ,,crocked  
+halcyon ,thoughtful  ,mortal ,storm-tossed  ,,cockeyed  
+prosperous ,wistful ,soul ,tempest-tossed  ,,fuddled  
+happy  ,sad  ,person of color ,tempest-tost  ,,loaded  
+metallic  ,wistful  ,person of colour ,tempest-swept  ,,pie-eyed  
+metal  ,pensive ,man ,careful  ,,pissed  
+favored ,sad  ,piece ,care-laden  ,,pixilated  
+fortunate ,tragic  ,clothing ,heavy-laden  ,,plastered  
+blessed  ,tragical ,article of clothing ,clouded  ,,potty  
+blest  ,sad  ,vesture ,disquieted  ,,slopped  
+euphonious  ,drama  ,wear ,distressed  ,,sloshed  
+euphonous  ,tragical  ,wearable ,disturbed  ,,smashed  
+favorable ,tragic ,habiliment ,upset  ,,soaked  
+favourable ,sad  ,blacken ,worried  ,,soused  
+lucky ,tragicomic  ,melanize ,hard-pressed  ,,sozzled  
+propitious  ,tragedy  ,melanise ,hard put  ,,squiffy  
+halcyon  ,tragicomical ,nigrify ,in a bad way  ,,stiff  
+peaceful  ,sad  ,discolor ,fraught  ,,tiddly  
+golden ,humorous  ,discolour ,hag-ridden  ,,tiddley  
+prosperous ,humourous  ,colour ,hagridden  ,,tight  
+happy  ,tragicomical  ,color ,tormented  ,,tipsy  
+Alcyone ,tragicomic ,choleric  ,haunted  ,,wet  
+Halcyon ,sad  ,passionate  ,in Dutch  ,,bibulous  
+mythical being ,humorous  ,irascible ,infested  ,,boozy  
+genus Halcyon ,humourous  ,hotheaded ,overrun  ,,drunken  
+bird genus ,sorrowful  ,hot-tempered ,plagued  ,,sottish  
+prosperous  ,anguished  ,quick-tempered ,in trouble  ,,doped  
+comfortable ,tormented  ,short-tempered ,mothy  ,,drugged  
+easy ,tortured  ,ill-natured  ,stressed  ,,narcotized  
+well-fixed ,bereaved  ,angry  ,struggling  ,,narcotised  
+well-heeled ,bereft  ,irascible  ,suffering  ,,half-seas-over  
+well-off ,grief-stricken  ,choleric ,troublous  ,,high  
+well-situated ,grieving  ,hotheaded ,concerned  ,,mellow  
+well-to-do ,mourning  ,hot-tempered ,disruptive ,,hopped-up  
+rich  ,sorrowing  ,quick-tempered ,riotous ,,stoned  
+booming ,bitter  ,short-tempered ,tumultuous ,,excited  
+flourishing ,brokenhearted  ,ill-natured  ,turbulent ,,drunkard 
+palmy ,heartbroken  ,angry  ,neural ,,rummy 
+prospering ,heartsick  ,hot under the collar  ,nervous ,,sot 
+roaring ,dolorous  ,angry  ,system  ,,inebriate 
+thriving ,dolourous  ,huffy  ,neuronal ,,wino 
+successful  ,lachrymose  ,thin-skinned ,neuronic ,,drinker 
+golden ,tearful  ,feisty ,somatic cell ,,imbiber 
+halcyon ,weeping  ,touchy ,vegetative cell  ,,toper 
+happy  ,elegiac  ,sensitive  ,system  ,,juicer 
+favorable ,grievous  ,mad ,scheme ,,overexcited  
+favourable ,heartbreaking  ,sore ,group ,,excited  
+lucky ,heartrending  ,angry  ,grouping ,,stimulated  
+propitious  ,lamenting  ,mad  ,instrumentality ,,stirred 
+laughing  ,wailing  ,huffy ,instrumentation ,,stirred up 
+riant ,wailful  ,sore ,system of rules ,,aroused 
+happy  ,lugubrious  ,angry  ,method ,,excited  
+riant  ,mournful  ,brainsick ,plan of action ,,stirred  
+laughing ,plaintive  ,crazy ,body part ,,moved 
+happy  ,sad  ,demented ,arrangement ,,affected 
+cheerful  ,woebegone  ,distracted ,organization ,,touched 
+beaming  ,woeful  ,disturbed ,organisation ,,sick  
+glad  ,joyless  ,sick ,structure ,,affected  
+beamish  ,unhappy  ,unbalanced ,substance ,,emotional  
+smiling  ,deplorable ,unhinged ,matter ,,stimulated 
+twinkly  ,distressing ,insane  ,live body ,,stirred up 
+blithe  ,lamentable ,delirious ,orderliness ,,aroused 
+blithesome  ,pitiful ,excited ,methodicalness ,,excited  
+lighthearted  ,sad ,frantic ,aflutter ,,agitated  
+lightsome  ,sorry ,unrestrained ,nervous ,,stirred up  
+light-hearted  ,bad  ,wild  ,excited  ,,stimulated 
+buoyant  ,execrable ,harebrained ,excited  ,,stirred 
+chirpy  ,miserable ,insane ,aflutter  ,,aroused 
+perky  ,woeful ,foolish  ,nervous  ,,excited  
+cheering  ,wretched ,sore  ,agog  ,,aroused  
+cheery  ,inferior  ,sensitive ,crazy  ,,awakened  
+gay  ,condemnable ,raw ,fevered  ,,stimulated 
+sunny  ,criminal ,tender ,intoxicated  ,,stirred 
+chipper  ,reprehensible ,painful  ,drunk  ,,stirred up 
+debonair  ,vicious ,afflictive ,overexcited  ,,excited  
+debonaire  ,wrong  ,painful ,stimulated  ,,wound up 
+jaunty  ,distressing ,unpleasant  ,stirred  ,,tense  
+happy  ,distressful ,huffy ,stirred up  ,,horny 
+pollyannaish ,disturbing ,mad ,aroused  ,,randy 
+upbeat ,perturbing ,angry  ,teased  ,,ruttish 
+optimistic  ,troubling ,infection ,titillated  ,,steamy 
+contented  ,worrisome ,indignant  ,thrilled  ,,turned on 
+content ,worrying ,incensed ,thrillful  ,,sexy  
+complacent  ,heavy  ,outraged ,agitated  ,,ablaze 
+self-satisfied  ,deplorable ,umbrageous ,aroused ,,aflame 
+self-complacent  ,lamentable ,angry  ,emotional ,,passionate  
+easygoing  ,pitiful ,incensed  ,worked up ,,emotional 
+calm  ,sad ,indignant ,delirious ,,excited 
+placid  ,sorry ,outraged ,frantic ,,worked up 
+satisfied  ,bad  ,umbrageous ,mad ,,agitated  
+smug  ,lamentable ,angry  ,unrestrained ,,teased  
+happy  ,deplorable ,outraged  ,wild  ,,titillated 
+pleased  ,distressing ,indignant ,activated ,,excited  
+content  ,pitiful ,incensed ,reactive  ,,titillated  
+contented ,sad ,umbrageous ,skittish ,,teased 
+complacent  ,sorry ,angry  ,flighty ,,excited  
+self-satisfied  ,bad  ,umbrageous  ,spooky ,,thrilled  
+self-complacent  ,pitiful ,shady ,nervous ,,excited  
+easygoing  ,pathetic ,shadowed ,excitable  ,,thrillful  
+calm  ,pitiable ,shadowy ,flighty ,,excited  
+placid  ,contemptible  ,shaded  ,flyaway ,,agitated  
+satisfied  ,deplorable ,indignant ,head-in-the-clouds ,,aroused  
+smug  ,distressing ,incensed ,scatterbrained ,,emotional  
+happy  ,lamentable ,outraged ,frivolous  ,,excited  
+pleased  ,sad ,angry  ,skittish ,,worked up  
+collection ,sorry ,irate  ,spooky ,,demoniac  
+aggregation ,bad  ,ireful ,nervous ,,demoniacal  
+accumulation ,hapless ,angry  ,excitable  ,,distraught  
+assemblage ,miserable ,ireful  ,spooky ,,overwrought  
+message ,misfortunate ,irate ,skittish ,,jolted  
+subject matter ,piteous ,angry  ,flighty ,,shaken  
+substance ,poor ,livid  ,nervous ,,feverish  
+communication ,wretched ,ashen ,excitable  ,,hectic  
+proportion ,unfortunate  ,blanched ,excitable  ,,frantic  
+capacity ,sorry ,bloodless ,high-keyed  ,,frenetic  
+volume ,pitying ,white ,quick  ,,phrenetic  
+cognitive content ,compassionate  ,colorless  ,warm  ,,frenzied  
+mental object ,regretful ,colourless  ,skittish  ,,hysterical  
+cognition ,bad ,light  ,flighty  ,,psychedelic  
+knowledge ,penitent  ,angry  ,spooky  ,,wild-eyed  
+noesis ,repentant  ,black-and-blue ,nervous  ,,discomposed  
+contentedness ,deplorable ,injured  ,irritable ,,impatient  
+acceptance ,distressing ,smoldering  ,sensitive  ,,tense  
+subject ,lamentable ,smouldering ,,,unquiet  
+depicted object ,pitiful ,angry  ,,,unsteady  
+thing ,sad ,smouldering  ,,,bubbling  
+limit ,bad  ,smoldering ,,,foaming  
+circumscribe ,blue ,angry  ,,,foamy  
+confine ,dark ,wrathful  ,,,frothing  
+satisfy ,depressing ,wroth ,,,spumous  
+gratify ,dingy ,wrothful ,,,spumy  
+glad  ,disconsolate ,angry  ,,,sudsy  
+gladsome  ,dismal ,wroth  ,,,churning  
+cheerful  ,dispiriting ,wrathful ,,,roiling  
+happy ,gloomy ,wrothful ,,,roiled  
+willing  ,grim ,angry  ,,,roily  
+grateful  ,drab ,wrothful  ,,,turbulent  
+thankful  ,drear ,wrathful ,,,churned-up  
+beaming ,dreary ,wroth ,,,rippled  
+gladiolus ,cheerless  ,angry  ,,,ruffled  
+gladiola ,uncheerful  ,furious ,,,seething  
+sword lily ,good-for-nothing ,ferocious ,,,stirred  
+iridaceous plant ,good-for-naught ,fierce ,,,tossing 
+elated  ,meritless ,savage ,,,moving  
+exultant  ,no-account ,violent  ,,,aroused 
+exulting  ,no-count ,angered ,,,awakened  
+jubilant  ,no-good ,enraged ,,,stimulated 
+prideful  ,worthless  ,infuriated ,,,stirred 
+rejoicing  ,bad  ,maddened ,,,stirred up 
+triumphal  ,atrocious  ,angry  ,,,excited  
+triumphant  ,abominable  ,angry ,,,wound up 
+gladdened  ,awful  ,raging ,,,tense  
+exhilarated  ,dreadful  ,tempestuous ,,,horny 
+high  ,painful  ,wild ,,,randy 
+in high spirits  ,terrible  ,stormy  ,,,ruttish 
+sublime  ,unspeakable  ,raging ,,,steamy 
+uplifted  ,corked  ,hot ,,,turned on 
+euphoric  ,corky  ,violent  ,,,sexy  
+happy  ,deplorable  ,intense  ,,,ablaze 
+joyous  ,distressing  ,angry ,,,aflame 
+gleeful ,lamentable  ,furious ,,,passionate  
+joyful ,pitiful  ,tempestuous ,,,emotional 
+jubilant ,sad  ,wild ,,,excited 
+euphoric  ,sorry  ,stormy  ,,,worked up 
+euphoriant  ,fearful  ,tempestuous ,,,agitated  
+expansive  ,frightful  ,stormy ,,,emotional 
+elated  ,hard  ,unpeaceful  ,,,affectional  
+happy  ,tough  ,angry ,,,affective  
+felicitous  ,hopeless  ,furious ,,,emotive  
+congratulatory  ,horrid  ,raging ,,,bathetic  
+gratulatory  ,icky  ,wild ,,,drippy  
+happy  ,crappy  ,stormy  ,,,hokey  
+well-chosen  ,lousy  ,wild ,,,maudlin  
+well-turned  ,rotten  ,chaotic  ,,,mawkish  
+well-wishing  ,shitty  ,disorderly  ,,,mushy  
+happy ,stinking  ,delirious  ,,,schmaltzy  
+fortunate  ,stinky  ,excited  ,,,schmalzy  
+joyful  ,ill  ,frantic  ,,,sentimental  
+beatific  ,incompetent  ,mad  ,,,soppy  
+overjoyed  ,unskilled  ,unrestrained  ,,,soupy  
+happy  ,mediocre  ,frenzied  ,,,slushy  
+joyous  ,mischievous  ,manic  ,,,cathartic  
+elated ,naughty  ,unsubdued  ,,,releasing  
+gleeful ,negative  ,unquiet  ,,,charged  
+jubilant ,poor  ,untamed ,,,supercharged  
+joyous  ,pretty  ,feral  ,,,funky  
+ecstatic  ,rubber  ,ferine  ,,,low-down  
+enraptured  ,no-good  ,savage  ,,,het up  
+rapturous  ,severe  ,semi-wild  ,,,hot-blooded  
+rapt  ,swingeing  ,unbroken  ,,,Latin  
+rhapsodic  ,uncool  ,undomesticated  ,,,little  
+elated  ,unfavorable  ,intractable  ,,,lyric  
+gleeful  ,unfavourable  ,passionate  ,,,lyrical  
+joyful  ,unsuitable  ,uncontrolled  ,,,mind-blowing  
+jubilant  ,disobedient  ,violent ,,,moody  
+gay  ,evil  ,intense  ,,,temperamental  
+festal  ,worse  ,baseless ,,,overemotional  
+festive  ,worst  ,groundless ,,,sloppy  
+merry  ,big ,idle ,,,soulful  
+jocund  ,intense  ,unfounded ,,,warm-toned  
+jolly  ,tough ,unwarranted ,,,moved  
+jovial  ,uncomfortable  ,unsupported  ,,,affected  
+mirthful  ,spoiled ,raving ,,,stirred  
+happy  ,spoilt ,raving mad ,,,touched  
+felicitous ,stale  ,insane  ,,,moving  
+congratulatory  ,regretful ,hazardous ,,,passionate  
+gratulatory  ,sorry ,risky ,,,warm  
+happy  ,penitent  ,dangerous  ,,,feeling  
+well-chosen  ,repentant  ,unsafe  ,,,effusive 
+well-turned  ,uncollectible ,fantastic ,,,gushing 
+well-wishing  ,invalid  ,unrealistic  ,,,gushy 
+happy ,inferior  ,desert ,,,demonstrative  
+fortunate  ,nonstandard  ,godforsaken ,,,aroused 
+fortunate  ,risky ,waste ,,,excited 
+better off  ,high-risk ,inhospitable  ,,,worked up 
+felicitous  ,speculative ,crazy ,,,agitated  
+happy  ,unsound  ,enthusiastic  ,,,worked up 
+fortuitous  ,unfit ,barbarian ,,,aroused 
+good  ,unsound ,barbaric ,,,emotional 
+well  ,unhealthy  ,savage ,,,excited 
+heaven-sent  ,harmful  ,uncivilized ,,,agitated  
+providential  ,immoral ,uncivilised ,,,delirious 
+miraculous  ,forged ,noncivilized  ,,,hallucinating 
+lucky  ,counterfeit  ,noncivilised  ,,,ill  
+well-off  ,imitative  ,angry ,,,sick  
+privileged  ,defective ,furious ,,,excited 
+successful  ,malfunctioning  ,raging ,,,frantic 
+favored ,nonfunctional  ,tempestuous ,,,mad 
+golden ,badness ,stormy  ,,,unrestrained 
+blessed  ,quality ,natural state ,,,wild  
+blest  ,badly ,state of nature ,,,frantic 
+hopeful ,,state ,,,frenetic 
+rosy ,,wilderness ,,,phrenetic 
+auspicious  ,,geographical area ,,,frenzied 
+glad ,,geographic area ,,,agitated  
+gladsome  ,,geographical region ,,,delirious 
+cheerful  ,,geographic region ,,,excited 
+happy ,,rampantly ,,,mad 
+willing  ,,stormy  ,,,unrestrained 
+grateful  ,,angry  ,,,wild  
+thankful  ,,furious  ,,,mad 
+beaming ,,raging  ,,,huffy 
+gladiolus ,,tempestuous  ,,,sore 
+gladiola ,,wild  ,,,angry  
+sword lily ,,billowy  ,,,brainsick 
+iridaceous plant ,,billowing  ,,,crazy 
+willing  ,,surging  ,,,demented 
+consenting  ,,blustering  ,,,distracted 
+disposed  ,,blusterous  ,,,disturbed 
+fain  ,,blustery  ,,,sick 
+inclined  ,,boisterous  ,,,unbalanced 
+prepared  ,,fierce  ,,,unhinged 
+glad  ,,rough  ,,,insane  
+happy  ,,blowy  ,,,delirious 
+ready  ,,breezy  ,,,excited 
+volitional  ,,windy  ,,,frantic 
+willing and able  ,,choppy  ,,,unrestrained 
+compliant  ,,dirty  ,,,wild  
+voluntary  ,,gusty  ,,,harebrained 
+uncoerced ,,puffy  ,,,insane 
+unforced ,,squally  ,,,foolish  
+volition ,,thundery  ,,,unrestrained 
+choice ,,inclement  ,,,excessive  
+selection ,,unpeaceful  ,,,extravagant  
+option ,,tempestuous ,,,exuberant  
+pick ,,unhealthy  ,,,overweening  
+well-chosen ,,angry  ,,,freewheeling  
+happy ,,arthritic  ,,,highflying  
+felicitous  ,,creaky  ,,,unbridled  
+,,rheumatic  ,,,unchecked  
+,,rheumatoid  ,,,uncurbed  
+,,rheumy  ,,,ungoverned  
+,,asthmatic  ,,,unbuttoned  
+,,wheezing  ,,,unlaced  
+,,wheezy  ,,,unhampered  
+,,bad  ,,,unhindered  
+,,unfit  ,,,free  
+,,unsound  ,,,uncontrolled  
+,,blebby  ,,,uninhibited  
+,,blistery  ,,,unreserved  
+,,bloated  ,,,delirious 
+,,distended  ,,,excited 
+,,puffed  ,,,frantic 
+,,puffy  ,,,mad 
+,,swollen  ,,,wild  
+,,intumescent  ,,,flamboyant 
+,,tumescent  ,,,colorful  
+,,tumid  ,,,colourful  
+,,turgid  ,,,wild  
+,,bloodshot  ,,,chaotic  
+,,cankerous  ,,,disorderly  
+,,ulcerated  ,,,delirious  
+,,ulcerous  ,,,excited  
+,,carbuncled  ,,,frantic  
+,,carbuncular  ,,,mad  
+,,carious  ,,,unrestrained  
+,,caseous  ,,,frenzied  
+,,chilblained  ,,,manic  
+,,colicky  ,,,unsubdued  
+,,flatulent  ,,,unquiet  
+,,gassy  ,,,untamed 
+,,cytomegalic  ,,,feral  
+,,dehydrated  ,,,ferine  
+,,diseased  ,,,savage  
+,,morbid  ,,,semi-wild  
+,,pathologic  ,,,unbroken  
+,,pathological  ,,,undomesticated  
+,,edematous  ,,,intractable  
+,,dropsical  ,,,passionate  
+,,enlarged  ,,,uncontrolled  
+,,foaming  ,,,violent 
+,,foamy  ,,,intense  
+,,frothing  ,,,baseless 
+,,gangrenous  ,,,groundless 
+,,mortified  ,,,idle 
+,,inflamed  ,,,unfounded 
+,,inflammatory  ,,,unwarranted 
+,,ingrowing  ,,,unsupported  
+,,ingrown  ,,,raving 
+,,jaundiced  ,,,raving mad 
+,,icteric  ,,,insane  
+,,yellow  ,,,hazardous 
+,,membranous  ,,,risky 
+,,membrane-forming  ,,,dangerous  
+,,mental  ,,,unsafe  
+,,proinflammatory  ,,,fantastic 
+,,pro-inflammatory  ,,,unrealistic  
+,,sallow  ,,,desert 
+,,sickly  ,,,godforsaken 
+,,sore-eyed  ,,,waste 
+,,sunburned  ,,,inhospitable  
+,,sunburnt  ,,,crazy 
+,,varicose  ,,,enthusiastic  
+,,windburned  ,,,barbarian 
+,,windburnt  ,,,barbaric 
+,,frail  ,,,savage 
+,,ill  ,,,uncivilized 
+,,sick  ,,,uncivilised 
+,,unwholesome  ,,,noncivilized  
+,,insalubrious ,,,noncivilised  
+,,unhealthful ,,,angry 
+,,unhealthful  ,,,furious 
+,,,,,raging 
+,,,,,tempestuous 
+,,,,,stormy  
+,,,,,natural state 
+,,,,,state of nature 
+,,,,,state 
+,,,,,wilderness 
+,,,,,geographical area 
+,,,,,geographic area 
+,,,,,geographical region 
+,,,,,geographic region 
+,,,,,rampantly 
+,,,,,activated 
+,,,,,treated  
+,,,,,excited 
+,,,,,reactive  
+,,,,,active  
+,,,,,reactive  
+,,,,,activated  
+,,,,,excited  
+,,,,,labile  
+,,,,,oxidizable  
+,,,,,thermolabile  
+,,,,,unstable  
+,,,,,sensitive  
