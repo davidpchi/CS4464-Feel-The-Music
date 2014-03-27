@@ -11,10 +11,55 @@ var finalData = {};
 
 var isUsingDefaultSentimentAnaylsis = false;
 
+var happyData = [];
+var sadData = [];
+var angryData = [];
+var nervousData = [];
+var jealousData = [];
+var excitedData = [];
+
 //DAVID CHI 02/27/14
 
 function init(){
-	rssfeedsetup();
+	d3.csv("/tools/happy.csv", function(d) {
+		happyData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
+	
+	d3.csv("/tools/sad.csv", function(d) {
+		sadData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
+	
+	d3.csv("/tools/angry.csv", function(d) {
+		angryData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
+	
+	d3.csv("/tools/nervous.csv", function(d) {
+		nervousData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
+	
+	d3.csv("/tools/excited.csv", function(d) {
+		excitedData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
+	
+	d3.csv("/tools/jealous.csv", function(d) {
+		jealousData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
+}
+
+function isDataLoaded() {
+	return (happyData.length != 0 && sadData.length != 0 && angryData.length != 0 && nervousData != 0 && excitedData != 0 && jealousData != 0);
 }
 
 function rssfeedsetup(){
@@ -269,9 +314,11 @@ function handleData(finalData) {
 			var testFunction = function(data) {
 				finalData[test].lyrics = getLyrics(data);
 				
+				console.log("data");
+				
 				//if not using default sentiment analysis, we will have to use our own
 				if (isUsingDefaultSentimentAnaylsis == false)
-					finalData[test].mood = runSentimentAnaylsis(finalData[test].lyrics);
+					finalData[test].mood = runSentimentAnalysis(finalData[test].lyrics);
 				
 				var color = "white";
 				if (finalData[test].mood === "negative") 
@@ -280,7 +327,7 @@ function handleData(finalData) {
 					color = "green";
 				d3.selectAll("#vis").append("p")
 					.style("color", color)
-					.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ":" + finalData[test].lyrics);
+					.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ":"); //+ finalData[test].lyrics);
 			}
 			
 			var url = "http://lyrics.wikia.com/"+finalData[test].artist.split(' ').join('_') + ":" + finalData[test].title.split(' ').join('_');
@@ -291,7 +338,60 @@ function handleData(finalData) {
 }
 
 function runSentimentAnalysis(text) {
+	//loop through each word of the lyrics
+	var words = text.split(" ");
+	var emotionArray = [];
+	emotionArray["happy"] = 0;
+	emotionArray["sad"] = 0;
+	emotionArray["angry"] = 0;
+	emotionArray["nervous"] = 0;
+	emotionArray["jealous"] = 0;
+	emotionArray["excited"] = 0;
 	
+	for (var i = 0; i < words.length; i++) {
+		for (var a = 0; a < happyData[0].length; a++) {
+			if (happyData[0][a].Happy.replace(" ", "") === words[i]) {
+				emotionArray["happy"]++;
+			}
+		}
+		for (var a = 0; a < sadData[0].length; a++) {
+			if (sadData[0][a].Sad.replace(" ", "") === words[i]) {
+				emotionArray["sad"]++;
+			}
+		}
+		for (var a = 0; a < angryData[0].length; a++) {
+			if (angryData[0][a].Angry.replace(" ", "") === words[i]) {
+				emotionArray["angry"]++;
+			}
+		}
+		for (var a = 0; a < nervousData[0].length; a++) {
+			if (nervousData[0][a].Nervous.replace(" ", "") === words[i]) {
+				emotionArray["nervous"]++;
+			}
+		}
+		for (var a = 0; a < jealousData[0].length; a++) {
+			if (jealousData[0][a].Jealous.replace(" ", "") === words[i]) {
+				emotionArray["jealous"]++;
+			}
+		}
+		for (var a = 0; a < excitedData[0].length; a++) {
+			if (excitedData[0][a].Excited.replace(" ", "") === words[i]) {
+				emotionArray["excited"]++;
+			}
+		}
+	}
+	
+	var maxVal = 0;
+	var returnVal = "";
+	for (var potate in emotionArray) {
+		console.log(potate);
+		if (maxVal < emotionArray[potate]) {
+			maxVal = emotionArray[potate];
+			returnVal = potate;
+		}
+	}
+	
+	return returnVal;
 }
 
 function addImage(res) {
