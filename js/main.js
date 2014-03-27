@@ -9,6 +9,8 @@ var yA=0;
 
 var finalData = {};
 
+var isUsingDefaultSentimentAnaylsis = false;
+
 //DAVID CHI 02/27/14
 
 function init(){
@@ -25,6 +27,70 @@ function rssfeedsetup(){
 	var feedpointer=new google.feeds.Feed(feedurl) //Google Feed API method
 	feedpointer.setNumEntries(feedlimit) //Google Feed API method
 	feedpointer.load(processFeed) //Google Feed API method
+}
+
+function getLyrics(rawHtmlParam) {
+	var rawHtml = rawHtmlParam.toString();
+	var startText = "<div class=\"lyricbox\">";
+	var startIndex = rawHtml.indexOf(startText) + startText.length;
+	var endText = "<div id=\"songfooter\">";
+	var endIndex = rawHtml.indexOf(endText);
+	
+	var tempText = rawHtml.substring(startIndex, endIndex);
+	var finalText = "";
+	var canCopy = true;
+		
+	//rip out all tags in the string
+	for (var i = 0; i < tempText.length; i++) {
+		if (tempText.charAt(i) === "<") 
+			canCopy = false;
+		else if (tempText.charAt(i) === ">")
+			canCopy = true;
+		else if (canCopy == true) {
+			finalText += tempText.charAt(i);
+		}
+	}
+	
+	return finalText;
+}	
+
+function doAjax(url, callBack){
+	// if it is an external URI
+	if(url.match('^http')){
+	  // call YQL
+	  $.getJSON("http://query.yahooapis.com/v1/public/yql?"+
+				"q=select%20*%20from%20html%20where%20url%3D%22"+
+				encodeURIComponent(url)+
+				"%22&format=xml'&callback=?",
+		// this function gets the data from the successful 
+		// JSON-P call
+		function(data){
+		  // if there is data, filter it and render it out
+		  if(data.results[0]){
+			var data = filterData(data.results[0]);
+			callBack(data);
+		  // otherwise tell the world that something went wrong
+		  } else {
+			var errormsg = "<p>Error: can't load the page.</p>";
+			console.log(errormsg);
+		  }
+		}
+	  );
+	// if it is not an external URI, use Ajax load()
+	} else {
+	  $('#target').load(url);
+	}
+}
+
+// filter out some nasties
+function filterData(data){
+	data = data.replace(/<?\/body[^>]*>/g,'');
+	data = data.replace(/[\r|\n]+/g,'');
+	data = data.replace(/<--[\S\s]*?-->/g,'');
+	data = data.replace(/<noscript[^>]*>[\S\s]*?<\/noscript>/g,'');
+	data = data.replace(/<script[^>]*>[\S\s]*?<\/script>/g,'');
+	data = data.replace(/<script.*\/>/,'');
+	return data;
 }
 
 function processFeed(result){
@@ -79,31 +145,57 @@ function processFeed(result){
 						anotherIndex++; 
 					}
 					else {
-						$.ajax({
-							url: 'https://loudelement-free-natural-language-processing-service.p.mashape.com/nlp-text/', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
-							type: 'GET', // The HTTP Method
-							data: {text: data.data[0].snippet}, // Additional parameters here
-							datatype: 'json',
-							success: function(data) { 
-								finalData[thefeeds[anotherIndex].title] = {
-									mood: data["sentiment-text"],
-									name: thefeeds[anotherIndex].title
-								}; 
-								anotherIndex++; 
-								if (anotherIndex == 25) {
-									handleData(finalData);
+						//check to see if we are using default sentiment analysis or our sentiment analysis
+						//note, this default sentiment analysis is only using lyric snippets
+						//TODO: THIS IS BROKEN, AND I AM NOT PLANNING ON FIXING IT!!! :D
+						if (isUsingDefaultSentimentAnaylsis == true) {
+							$.ajax({
+								url: 'https://loudelement-free-natural-language-processing-service.p.mashape.com/nlp-text/', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
+								type: 'GET', // The HTTP Method
+								data: {text: data.data[0].snippet}, // Additional parameters here
+								datatype: 'json',
+								success: function(data) { 
+									var titleAndArtist = getTitleAndArtist(thefeeds[anotherIndex].title);
+								
+									finalData[thefeeds[anotherIndex].title] = {
+										mood: data["sentiment-text"],
+										title: titleAndArtist[0],
+										artist: titleAndArtist[1],
+										lyrics: "",
+										rank: anotherIndex
+									}; 
+									anotherIndex++; 
+									if (anotherIndex == 25) {
+										handleData(finalData);
+									}
+								},
+								error: function(err) { 
+									console.log(err); 
+									anotherIndex++;
+									if (anotherIndex == 25)
+										console.log("DONE!");
+								},
+								beforeSend: function(xhr) {
+								xhr.setRequestHeader("X-Mashape-Authorization", "HfCZfcVfY1DRV2e7thtTWCQP5fUfD9mh"); // Enter here your Mashape key
 								}
-							},
-							error: function(err) { 
-								console.log(err); 
-								anotherIndex++;
-								if (anotherIndex == 25)
-									console.log("DONE!");
-							},
-							beforeSend: function(xhr) {
-							xhr.setRequestHeader("X-Mashape-Authorization", "HfCZfcVfY1DRV2e7thtTWCQP5fUfD9mh"); // Enter here your Mashape key
+							});
+						}
+						else {
+							//run our own sentiment analysis engine in the handle final data
+							var titleAndArtist = getTitleAndArtist(thefeeds[anotherIndex].title);
+
+							finalData[thefeeds[anotherIndex].title] = {
+								mood: "neutral",
+								title: titleAndArtist[0],
+								artist: titleAndArtist[1],
+								lyrics: "",
+								rank: anotherIndex
+							}; 
+							anotherIndex++; 
+							if (anotherIndex == 25) {
+								handleData(finalData);
 							}
-						});
+						}
 					}
 				},
 				error: function(err) { 
@@ -118,74 +210,6 @@ function processFeed(result){
 			});
 			
 			//cf15c1b8d079b86126ada75aa87baa
-			
-
-	
-			
-			//TEST DEBUG CODE ENDS HERE!!!
-			
-			/*
-			var titleSplit = rawTitle.split(" ");
-			var timeStamp = thefeeds[i].publishedDate.substring(thefeeds[i].publishedDate.length-14);
-			var hours = timeStamp.substring(0,2);
-			var mins = timeStamp.substring(3,5);
-			var seconds = timeStamp.substring(6,9);
-			var colorVal = "rgb(" + hours*10 + "," + mins*10 + "," + seconds*4 + ")";
-			var feedLink = thefeeds[i].link;
-			
-			(function(rawTitle, titleSplit, n, i, drawIndex, colorVal, feedLink){myArr.push(function(done) {
-				var imageSearch = new google.search.ImageSearch();
-				var searchTerm = titleSplit[n];
-				var dumbFunction = function() {
-					var myRes = null;
-					if (imageSearch.results.length != 0) {
-						myRes = imageSearch.results[0].url;
-													
-						svg.append("rect")
-							.attr("class", "class_"+i)
-							.attr("fill", colorVal)
-							.attr('x', (drawIndex * 50) % 1000 + 2)
-							.attr('y', Math.floor(drawIndex / 20) * 50 + 2)
-							.attr('width', 50)
-							.attr('height', 50)
-							.attr('stroke', colorVal);
-							
-						var image = svg.append("image")
-							.attr("xlink:href", myRes)
-							.attr('x', (drawIndex * 50) % 1000 + 2)
-							.attr('y', Math.floor(drawIndex / 20) * 50 + 2)
-							.attr('width', 50)
-							.attr('height', 50)
-							.attr('stroke', "green")
-							.attr('title', rawTitle)
-							.on('mouseover', (function() {
-								var i = this;
-								$(".class_" + i).attr("stroke", "yellow")
-									.attr("stroke-width", "10");
-							}).bind(i))
-							.on('mouseout', (function() {
-								var i = this;
-								$(".class_" + i).attr("stroke", "")
-									.attr("stroke-width", "1");
-							}).bind(i))
-							.on('click', function() {
-								 window.open(feedLink);
-							});
-						
-						var test = $(image);
-				
-						$(image).tooltip({
-							'container': 'body',
-							'placement': 'bottom'
-						});
-					}
-					done(null, myRes);
-				}
-				imageSearch.setSearchCompleteCallback(this, dumbFunction, null);
-				imageSearch.execute(titleSplit[n]);
-			})})(rawTitle, titleSplit, n, i, drawIndex, colorVal, feedLink);
-			drawIndex++;
-			*/
 		}		
 		
 		async.parallel(myArr, function(err,result) {
@@ -198,17 +222,76 @@ function processFeed(result){
 		alert("Error fetching feeds!")
 }
 
+function getTitleAndArtist(rawStr) {
+	//rawStr has both artist and title
+	var artistAndTitle = [];
+	//we will return an array with both artist and title
+	var tempArtist = "";
+	var tempTitle = "";
+	var canCopy = true;
+	var isOnTitle = true;
+	
+	//replace the " - " with just "-"
+	rawStr = rawStr.replace(" - ", "-");
+	
+	for (var i = 0; i < rawStr.length; i++) {
+		if (rawStr.charAt(i) === "(") 
+			canCopy = false;
+		else if (rawStr.charAt(i) === ")")
+			canCopy = true;
+		else if (canCopy == true) {
+			//ignore hashtags
+			if (rawStr.charAt(i) === "#") {
+				continue;
+			}
+			//check to see if we are at moving onto the artist
+			if (rawStr.charAt(i) === "-") {
+				isOnTitle = false;
+				continue;
+			}
+			//check to see if we are on title
+			if (isOnTitle == true)
+				tempTitle += rawStr.charAt(i);
+			else 
+				tempArtist += rawStr.charAt(i);
+		}
+	}
+	
+	artistAndTitle[0] = tempTitle;
+	artistAndTitle[1] = tempArtist;
+	
+	return artistAndTitle;
+}
+
 function handleData(finalData) {
 	for (var test in finalData) {
-		var color = "white";
-		if (finalData[test].mood === "negative") 
-			color = "red";
-		if (finalData[test].mood === "positive")
-			color = "green";
-		d3.selectAll("#vis").append("p")
-			.style("color", color)
-			.text(finalData[test].name + ": " + finalData[test].mood);
+		(function(test, finalData) {
+			var testFunction = function(data) {
+				finalData[test].lyrics = getLyrics(data);
+				
+				//if not using default sentiment analysis, we will have to use our own
+				if (isUsingDefaultSentimentAnaylsis == false)
+					finalData[test].mood = runSentimentAnaylsis(finalData[test].lyrics);
+				
+				var color = "white";
+				if (finalData[test].mood === "negative") 
+					color = "red";
+				if (finalData[test].mood === "positive")
+					color = "green";
+				d3.selectAll("#vis").append("p")
+					.style("color", color)
+					.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ":" + finalData[test].lyrics);
+			}
+			
+			var url = "http://lyrics.wikia.com/"+finalData[test].artist.split(' ').join('_') + ":" + finalData[test].title.split(' ').join('_');
+			console.log(url);
+			doAjax(url, testFunction); 
+		})(test,finalData);
 	}
+}
+
+function runSentimentAnalysis(text) {
+	
 }
 
 function addImage(res) {
