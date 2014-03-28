@@ -21,6 +21,10 @@ var excitedData = [];
 //DAVID CHI 02/27/14
 
 function init(){
+
+	document.getElementById("vis").style.display="none";
+	document.getElementById('loading').style.display='block';
+
 	d3.csv("/tools/happy.csv", function(d) {
 		happyData.push(d);
 		if (isDataLoaded()) 
@@ -204,6 +208,8 @@ function processFeed(result){
 								
 									finalData[thefeeds[anotherIndex].title] = {
 										mood: data["sentiment-text"],
+										strenght: 0,
+										confidence: 0,
 										title: titleAndArtist[0],
 										artist: titleAndArtist[1],
 										lyrics: "",
@@ -233,6 +239,7 @@ function processFeed(result){
 								mood: "neutral",
 								title: titleAndArtist[0],
 								artist: titleAndArtist[1],
+								emotionArray: [],
 								lyrics: "",
 								rank: anotherIndex
 							}; 
@@ -309,6 +316,14 @@ function getTitleAndArtist(rawStr) {
 }
 
 function handleData(finalData) {
+
+	var finalDataLength = 0;
+	
+	for (var test in finalData) {
+		finalDataLength++;
+	}
+
+	var index = 0;
 	for (var test in finalData) {
 		(function(test, finalData) {
 			var testFunction = function(data) {
@@ -318,16 +333,15 @@ function handleData(finalData) {
 				
 				//if not using default sentiment analysis, we will have to use our own
 				if (isUsingDefaultSentimentAnaylsis == false)
-					finalData[test].mood = runSentimentAnalysis(finalData[test].lyrics);
+					finalData[test] = runSentimentAnalysis(finalData[test]);
+					
+				index++;
 				
-				var color = "white";
-				if (finalData[test].mood === "negative") 
-					color = "red";
-				if (finalData[test].mood === "positive")
-					color = "green";
-				d3.selectAll("#vis").append("p")
-					.style("color", color)
-					.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ":"); //+ finalData[test].lyrics);
+				console.log("index: " + index + ", length: " + finalDataLength);
+				
+				if (index == finalDataLength - 1) {
+					finishDisplay();
+				}
 			}
 			
 			var url = "http://lyrics.wikia.com/"+finalData[test].artist.split(' ').join('_') + ":" + finalData[test].title.split(' ').join('_');
@@ -337,9 +351,26 @@ function handleData(finalData) {
 	}
 }
 
-function runSentimentAnalysis(text) {
+function finishDisplay() {
+	console.log("running finish data display");
+	for (var test in finalData) {
+		var color = "white";
+		if (finalData[test].mood === "negative") 
+			color = "red";
+		if (finalData[test].mood === "positive")
+			color = "green";
+		d3.selectAll("#vis").append("p")
+			.style("color", color)
+			.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ": confidence/strength= " + finalData[test].confidence+"/"+finalData[test].strength); //+ finalData[test].lyrics);	
+	}
+	
+	document.getElementById("vis").style.display="block";
+	document.getElementById('loading').style.display='none';
+}
+
+function runSentimentAnalysis(song) {
 	//loop through each word of the lyrics
-	var words = text.split(" ");
+	var words = song.lyrics.split(" ");
 	var emotionArray = [];
 	emotionArray["happy"] = 0;
 	emotionArray["sad"] = 0;
@@ -384,14 +415,17 @@ function runSentimentAnalysis(text) {
 	var maxVal = 0;
 	var returnVal = "";
 	for (var potate in emotionArray) {
-		console.log(potate);
 		if (maxVal < emotionArray[potate]) {
+			song.confidence = (emotionArray[potate] - maxVal)/emotionArray[potate];
 			maxVal = emotionArray[potate];
 			returnVal = potate;
 		}
 	}
 	
-	return returnVal;
+	song.emotionArray = emotionArray;
+	song.mood = returnVal;
+	song.strength = maxVal;	
+	return song;
 }
 
 function addImage(res) {
