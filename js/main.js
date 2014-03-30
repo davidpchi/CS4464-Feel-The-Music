@@ -24,7 +24,8 @@ function init(){
 
 	document.getElementById("vis").style.display="none";
 	document.getElementById('loading').style.display='block';
-
+	$('#loading_text').text("Loading emotion data");
+	
 	d3.csv("/tools/happy.csv", function(d) {
 		happyData.push(d);
 		if (isDataLoaded()) 
@@ -143,6 +144,8 @@ function filterData(data){
 }
 
 function processFeed(result){
+	$('#loading_text').text("Processing RSS Feed");
+
 	if (!result.error){
 		var myArr = [];
 		var thefeeds=result.feed.entries;
@@ -323,6 +326,8 @@ function handleData(finalData) {
 		finalDataLength++;
 	}
 
+	$('#loading_text').text("Starting sentiment analysis");
+	
 	var index = 0;
 	for (var test in finalData) {
 		(function(test, finalData) {
@@ -337,7 +342,8 @@ function handleData(finalData) {
 					
 				index++;
 				
-				console.log("index: " + index + ", length: " + finalDataLength);
+				$('#loading_text').text("Processing song " + index + " of " + finalDataLength);
+				//document.getElementById("loading_text").innerHtml = ("Loading item " + index + " of " + finalDataLength);
 				
 				if (index == finalDataLength - 1) {
 					finishDisplay();
