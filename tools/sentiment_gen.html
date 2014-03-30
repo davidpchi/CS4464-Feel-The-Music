@@ -7,14 +7,16 @@
 var temp;
 var finalWordList;
 
+//TODO: Change this line to change how deep in values you want to go
+var depth = 2;
+
 $(document).ready(function(){
-	var wordListSeed = [{word:"happy", synonyms:[], count: 0}, 
-	{word:"sad", synonyms:[], count: 0}, 
-	{word:"angry", synonyms:[], count: 0}, 
-	{word:"nervous", synonyms:[], count: 0}, 
-	{word:"jealous", synonyms:[], count: 0}, 
-	{word:"excited", synonyms:[], count: 0}
-	]; 
+
+	//TODO: Change this line
+	var emotion = "happy";
+
+	var wordListSeed = {};
+	wordListSeed[emotion] = {word:emotion, synonyms:[], count: 0}
 	
 	var myFunction = function(wordList, myWord) {
 		console.log(wordList);
@@ -52,7 +54,7 @@ $(document).ready(function(){
 								wordList[myWord].synonyms[newWord.word] = newWord;
 
 								//console.log(wordList[myWord].synonyms);
-								if (wordList[myWord].count <= 1) {
+								if (wordList[myWord].count <= 2) {
 									myFunction(wordList[myWord].synonyms, newWord.word);
 								}
 							}
@@ -73,6 +75,7 @@ $(document).ready(function(){
 	finalWordList = wordListSeed;
 });
 
+//TODO: Run this line
 function printFinalWordList(word) {
 	var independentList = finalWordList[word].synonyms;
 	
