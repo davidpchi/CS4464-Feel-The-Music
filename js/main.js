@@ -30,7 +30,7 @@ function init(){
 	//Code to init the vis
 	svg = d3.selectAll("#vis").append("svg")
 		.attr("width", 1000)
-		.attr("height", 2550);
+		.attr("height", 2650);
 
 	document.getElementById("vis").style.display="none";
 	document.getElementById('loading').style.display='block';
@@ -200,107 +200,29 @@ function processFeed(result){
 			
 			//TEST DEBUG CODE!!!
 			
-			//https://www.mashape.com/vivekn/sentiment-3#!endpoint-Sentiment
-			//https://www.mashape.com/loudelement/free-natural-language-processing-service#!documentation
-			$.ajax({
-				url: 'http://api.lyricsnmusic.com/songs', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
-				type: 'POST', // The HTTP Method
-				dataType: "jsonp",
-				data: {api_key: "cf15c1b8d079b86126ada75aa87baa", artist: artist, track: rawTitle}, // Additional parameters here
-				success: function(data) { 
-					//console.log(""+data.data[0].title, data);
-					//https://www.mashape.com/vivekn/sentiment-3#!endpoint-Sentiment
-					//https://www.mashape.com/loudelement/free-natural-language-processing-service#!documentation
-					
-					console.log(data);
-					
-					if (data.data.length == 0) {
-						anotherIndex++; 
-					}
-					else {
-						//check to see if we are using default sentiment analysis or our sentiment analysis
-						//note, this default sentiment analysis is only using lyric snippets
-						//TODO: THIS IS BROKEN, AND I AM NOT PLANNING ON FIXING IT!!! :D
-						if (isUsingDefaultSentimentAnaylsis == true) {
-							$.ajax({
-								url: 'https://loudelement-free-natural-language-processing-service.p.mashape.com/nlp-text/', // The URL to the API. You can get this by clicking on "Show CURL example" from an API profile
-								type: 'GET', // The HTTP Method
-								data: {text: data.data[0].snippet}, // Additional parameters here
-								datatype: 'json',
-								success: function(data) { 
-									var titleAndArtist = getTitleAndArtist(thefeeds[anotherIndex].title);
-								
-									finalData[thefeeds[anotherIndex].title] = {
-										mood: data["sentiment-text"],
-										strenght: 0,
-										confidence: 0,
-										title: titleAndArtist[0],
-										artist: titleAndArtist[1],
-										lyrics: "",
-										rank: anotherIndex
-									}; 
-									anotherIndex++; 
-									if (anotherIndex == 25) {
-										handleData(finalData);
-									}
-								},
-								error: function(err) { 
-									console.log(err); 
-									anotherIndex++;
-									if (anotherIndex == 25)
-										console.log("DONE!");
-								},
-								beforeSend: function(xhr) {
-								xhr.setRequestHeader("X-Mashape-Authorization", "HfCZfcVfY1DRV2e7thtTWCQP5fUfD9mh"); // Enter here your Mashape key
-								}
-							});
-						}
-						else {
-							//run our own sentiment analysis engine in the handle final data
-							var titleAndArtist = getTitleAndArtist(thefeeds[anotherIndex].title);
+			//run our own sentiment analysis engine in the handle final data
+			var titleAndArtist = getTitleAndArtist(thefeeds[anotherIndex].title);
 
-							finalData[thefeeds[anotherIndex].title] = {
-								mood: "neutral",
-								title: titleAndArtist[0],
-								artist: titleAndArtist[1],
-								emotionArray: [],
-								lyrics: "",
-								rank: anotherIndex
-							}; 
-							anotherIndex++; 
-							console.log(anotherIndex);
-							if (isBillBoard100) {
-								if (anotherIndex == 100) {
-									handleData(finalData);
-								}
-							}
-							else {
-								if (anotherIndex == 25) {
-									handleData(finalData);
-								}
-							}
-						}
-					}
-				},
-				error: function(err) { 
-					console.log("error at lyrics api", err); 
-					anotherIndex++;
-					if (anotherIndex == 25)
-						console.log("DONE!");
-				},				
-				beforeSend: function(xhr) {
-					xhr.setRequestHeader("api_key", "cf15c1b8d079b86126ada75aa87baa"); // Enter here your Mashape key
-				}
-			});
+			finalData[thefeeds[anotherIndex].title] = {
+				mood: "neutral",
+				title: titleAndArtist[0],
+				artist: titleAndArtist[1],
+				emotionArray: [],
+				lyrics: "",
+				rank: anotherIndex
+			}; 
+			anotherIndex++; 
+			console.log(anotherIndex);
 			
-			//cf15c1b8d079b86126ada75aa87baa
-		}		
+			//provide a cap for billboard
+			if (isBillBoard100) {
+				if (anotherIndex == 25) {
+					break;
+				}
+			}
+		}
 		
-		async.parallel(myArr, function(err,result) {
-			//this is run when it is done
-		});
-
-		
+		handleData(finalData);
 	}
 	else
 		alert("Error fetching feeds!")
@@ -323,7 +245,7 @@ function getTitleAndArtist(rawStr) {
 		tempArtist = rawStr.substring(commaIndex + 2);
 		
 		//remove hashtags from titles
-		tempTitle.replace("#", "");
+		tempTitle = tempTitle.replace("#", "");
 		
 		//remove featured artists
 		var featureIndex =tempArtist.search("Featuring");
@@ -386,7 +308,7 @@ function handleData(finalData) {
 					
 				index++;
 				
-				$('#loading_text').text("Processing song " + index + " of " + finalDataLength);
+				$('#loading_text').html("Please wait. This may take up to a minute. <br> Processing song " + index + " of " + finalDataLength);
 				//document.getElementById("loading_text").innerHtml = ("Loading item " + index + " of " + finalDataLength);
 				
 				if (index == finalDataLength - 1) {
