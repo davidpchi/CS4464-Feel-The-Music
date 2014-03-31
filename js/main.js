@@ -33,37 +33,37 @@ function init(){
 	document.getElementById('loading').style.display='block';
 	$('#loading_text').text("Loading emotion data");
 	
-	d3.csv("/tools/happy.csv", function(d) {
+	d3.csv("tools/happy.csv", function(d) {
 		happyData.push(d);
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
 	
-	d3.csv("/tools/sad.csv", function(d) {
+	d3.csv("tools/sad.csv", function(d) {
 		sadData.push(d);
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
 	
-	d3.csv("/tools/angry.csv", function(d) {
+	d3.csv("tools/angry.csv", function(d) {
 		angryData.push(d);
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
 	
-	d3.csv("/tools/nervous.csv", function(d) {
+	d3.csv("tools/nervous.csv", function(d) {
 		nervousData.push(d);
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
 	
-	d3.csv("/tools/excited.csv", function(d) {
+	d3.csv("tools/excited.csv", function(d) {
 		excitedData.push(d);
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
 	
-	d3.csv("/tools/jealous.csv", function(d) {
+	d3.csv("tools/jealous.csv", function(d) {
 		jealousData.push(d);
 		if (isDataLoaded()) 
 			rssfeedsetup();
