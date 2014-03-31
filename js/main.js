@@ -18,9 +18,16 @@ var nervousData = [];
 var jealousData = [];
 var excitedData = [];
 
+var colorArray = ['rgb(141,211,199)','rgb(255,255,179)','rgb(190,186,218)','rgb(251,128,114)','rgb(128,177,211)','rgb(253,180,98)','rgb(179,222,105)','rgb(252,205,229)','rgb(217,217,217)','rgb(188,128,189)','rgb(204,235,197)','rgb(255,237,111)'];
+
 //DAVID CHI 02/27/14
 
 function init(){
+	
+	//Code to init the vis
+	svg = d3.selectAll("#vis").append("svg")
+		.attr("width", 1000)
+		.attr("height", 2550);
 
 	document.getElementById("vis").style.display="none";
 	document.getElementById('loading').style.display='block';
@@ -359,15 +366,58 @@ function handleData(finalData) {
 
 function finishDisplay() {
 	console.log("running finish data display");
+	
+	var yA = 50;
+	var xA = 300;
+		
 	for (var test in finalData) {
 		var color = "white";
 		if (finalData[test].mood === "negative") 
 			color = "red";
 		if (finalData[test].mood === "positive")
 			color = "green";
-		d3.selectAll("#vis").append("p")
-			.style("color", color)
-			.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ": confidence/strength= " + finalData[test].confidence+"/"+finalData[test].strength); //+ finalData[test].lyrics);	
+		//d3.selectAll("#vis").append("p")
+		//	.style("color", color)
+		//	.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ": confidence/strength= " + finalData[test].confidence+"/"+finalData[test].strength); //+ finalData[test].lyrics);	
+		
+		//we need to generate an array of the arc draw angles
+		
+		var totalEmotionsCalc = 0;
+		var myEmotionArray = finalData[test].emotionArray;
+		
+		for (var pop in myEmotionArray) {
+			totalEmotionsCalc += myEmotionArray[pop];
+		}
+		
+		var lastAngle = 0;
+		var index = 0;
+		for (var pop in myEmotionArray) {
+			var ratio = myEmotionArray[pop]/ totalEmotionsCalc;
+			var endAngle = ratio * 2 * Math.PI + lastAngle;
+			var arc = d3.svg.arc()
+				.innerRadius(25)
+				.outerRadius(50)
+				.startAngle(lastAngle)
+				.endAngle(endAngle);
+		
+			svg.append("path")
+				.attr("d", arc)
+				.attr("transform", "translate(" + xA + "," + yA + ")")
+				.style("fill", colorArray[index]);
+				
+			lastAngle = endAngle;
+			index++;
+		}		
+		
+		var text = finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ": confidence/strength= " + finalData[test].confidence+"/"+finalData[test].strength; //+ finalData[test].lyrics)
+		
+		svg.append("text")
+			.attr('x', xA+110)
+			.attr('y', yA)
+			.attr('fill', 'red')
+			.text(text);
+			
+		yA+= 110;
 	}
 	
 	document.getElementById("vis").style.display="block";
