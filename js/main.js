@@ -9,6 +9,9 @@ var yA=0;
 
 var finalData = {};
 
+var isBillBoard100 = true;
+var finalDataLength = 0;
+
 var isUsingDefaultSentimentAnaylsis = false;
 
 var happyData = [];
@@ -75,10 +78,8 @@ function isDataLoaded() {
 }
 
 function rssfeedsetup(){
-	//TODO: DEBUG, no vis just yet
-	//svg = d3.select('#vis').append('svg')
-    //    .attr('width', 1000)
-    //    .attr('height', 1000);
+	if (isBillBoard100)
+		feedurl = "http://www1.billboard.com/rss/charts/hot-100";
 		
 	$("#rss_name").text(feedurl);
 	var feedpointer=new google.feeds.Feed(feedurl) //Google Feed API method
@@ -129,7 +130,9 @@ function doAjax(url, callBack){
 		  // otherwise tell the world that something went wrong
 		  } else {
 			var errormsg = "<p>Error: can't load the page.</p>";
-			console.log(errormsg);
+			//TODO: NEED TO FIX THIS!!! decrement our overall count so the app doesn't hang
+			finalDataLength--;
+			console.log(errormsg, data);
 		  }
 		}
 	  );
@@ -166,9 +169,20 @@ function processFeed(result){
 			rssoutput+="<li><a href='" + thefeeds[i].link + "'>" + thefeeds[i].title + "</a></li>"	
 
 			var rawTitle = thefeeds[i].title;
-			var dashIndex = rawTitle.search("-");
-			var artist = rawTitle.substring(dashIndex+2);
-			rawTitle = rawTitle.substring(0,dashIndex-1);
+			var artist = "";
+			//check to see if we are parsing the billboard RSS or the iTunes RSS
+			if (isBillBoard100) {
+				var colonIndex = rawTitle.search(":");
+				var commaIndex = rawTitle.search(",");
+				
+				rawTitle = rawTitle.substring(colonIndex + 2, commaIndex);
+				artist = rawTitle.substring(commaIndex + 2);
+			}
+			else {
+				var dashIndex = rawTitle.search("-");
+				artist = rawTitle.substring(dashIndex+2);
+				rawTitle = rawTitle.substring(0,dashIndex-1);
+			}
 			
 			artist = artist.replace(/ /g,"_");
 			rawTitle = rawTitle.replace(/ /g,"_");
@@ -180,8 +194,8 @@ function processFeed(result){
 			if (artist.indexOf('&') > 0)
 				artist = artist.substring(0, artist.indexOf('&')-1);
 			
-			//console.log("" + i +": "+ rawTitle);
-			//console.log(artist);
+			console.log("" + i +": "+ rawTitle);
+			console.log(artist);
 			data[rawTitle] = thefeeds[i];
 			
 			//TEST DEBUG CODE!!!
@@ -254,8 +268,16 @@ function processFeed(result){
 								rank: anotherIndex
 							}; 
 							anotherIndex++; 
-							if (anotherIndex == 25) {
-								handleData(finalData);
+							console.log(anotherIndex);
+							if (isBillBoard100) {
+								if (anotherIndex == 100) {
+									handleData(finalData);
+								}
+							}
+							else {
+								if (anotherIndex == 25) {
+									handleData(finalData);
+								}
 							}
 						}
 					}
@@ -293,29 +315,47 @@ function getTitleAndArtist(rawStr) {
 	var canCopy = true;
 	var isOnTitle = true;
 	
-	//replace the " - " with just "-"
-	rawStr = rawStr.replace(" - ", "-");
+	if (isBillBoard100) {
+		var colonIndex = rawStr.search(":");
+		var commaIndex = rawStr.search(",");
+		
+		tempTitle = rawStr.substring(colonIndex + 2, commaIndex);
+		tempArtist = rawStr.substring(commaIndex + 2);
+		
+		//remove hashtags from titles
+		tempTitle.replace("#", "");
+		
+		//remove featured artists
+		var featureIndex =tempArtist.search("Featuring");
+		console.log(featureIndex);
+		if (featureIndex > 0)
+			tempArtist = tempArtist.substring(0,featureIndex);
+	}
+	else {
+		//replace the " - " with just "-"
+		rawStr = rawStr.replace(" - ", "-");
 	
-	for (var i = 0; i < rawStr.length; i++) {
-		if (rawStr.charAt(i) === "(") 
-			canCopy = false;
-		else if (rawStr.charAt(i) === ")")
-			canCopy = true;
-		else if (canCopy == true) {
-			//ignore hashtags
-			if (rawStr.charAt(i) === "#") {
-				continue;
+		for (var i = 0; i < rawStr.length; i++) {
+			if (rawStr.charAt(i) === "(") 
+				canCopy = false;
+			else if (rawStr.charAt(i) === ")")
+				canCopy = true;
+			else if (canCopy == true) {
+				//ignore hashtags
+				if (rawStr.charAt(i) === "#") {
+					continue;
+				}
+				//check to see if we are at moving onto the artist
+				if (rawStr.charAt(i) === "-") {
+					isOnTitle = false;
+					continue;
+				}
+				//check to see if we are on title
+				if (isOnTitle == true)
+					tempTitle += rawStr.charAt(i);
+				else 
+					tempArtist += rawStr.charAt(i);
 			}
-			//check to see if we are at moving onto the artist
-			if (rawStr.charAt(i) === "-") {
-				isOnTitle = false;
-				continue;
-			}
-			//check to see if we are on title
-			if (isOnTitle == true)
-				tempTitle += rawStr.charAt(i);
-			else 
-				tempArtist += rawStr.charAt(i);
 		}
 	}
 	
@@ -325,10 +365,7 @@ function getTitleAndArtist(rawStr) {
 	return artistAndTitle;
 }
 
-function handleData(finalData) {
-
-	var finalDataLength = 0;
-	
+function handleData(finalData) {	
 	for (var test in finalData) {
 		finalDataLength++;
 	}
