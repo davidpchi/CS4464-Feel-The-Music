@@ -20,6 +20,9 @@ var angryData = [];
 var nervousData = [];
 var jealousData = [];
 var excitedData = [];
+var fatiguedData = [];
+var relaxedData = [];
+var stressedData = [];
 
 var colorArray = ['rgb(141,211,199)','rgb(255,255,179)','rgb(190,186,218)','rgb(251,128,114)','rgb(128,177,211)','rgb(253,180,98)','rgb(179,222,105)','rgb(252,205,229)','rgb(217,217,217)','rgb(188,128,189)','rgb(204,235,197)','rgb(255,237,111)'];
 
@@ -30,7 +33,7 @@ function init(){
 	//Code to init the vis
 	svg = d3.selectAll("#vis").append("svg")
 		.attr("width", 1000)
-		.attr("height", 2650);
+		.attr("height", 2750);
 
 	document.getElementById("vis").style.display="none";
 	document.getElementById('loading').style.display='block';
@@ -47,7 +50,7 @@ function init(){
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
-	
+
 	d3.csv("tools/angry.csv", function(d) {
 		angryData.push(d);
 		if (isDataLoaded()) 
@@ -71,10 +74,28 @@ function init(){
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
+	
+	d3.csv("tools/relaxed.csv", function(d) {
+		relaxedData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
+	
+	d3.csv("tools/fatigued.csv", function(d) {
+		fatiguedData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
+	
+	d3.csv("tools/stressed.csv", function(d) {
+		stressedData.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
 }
 
 function isDataLoaded() {
-	return (happyData.length != 0 && sadData.length != 0 && angryData.length != 0 && nervousData != 0 && excitedData != 0 && jealousData != 0);
+	return (happyData.length != 0 && sadData.length != 0 && angryData.length != 0 && nervousData != 0 && excitedData != 0 && jealousData != 0 && stressedData != 0 && relaxedData != 0 && fatiguedData != 0);
 }
 
 function rssfeedsetup(){
@@ -311,7 +332,7 @@ function handleData(finalData) {
 				$('#loading_text').html("Please wait. This may take up to a minute. <br> Processing song " + index + " of " + finalDataLength);
 				//document.getElementById("loading_text").innerHtml = ("Loading item " + index + " of " + finalDataLength);
 				
-				if (index == finalDataLength - 1) {
+				if (index == finalDataLength) {
 					finishDisplay();
 				}
 			}
@@ -393,6 +414,10 @@ function runSentimentAnalysis(song) {
 	emotionArray["nervous"] = 0;
 	emotionArray["jealous"] = 0;
 	emotionArray["excited"] = 0;
+	emotionArray["stressed"] = 0;
+	emotionArray["fatigued"] = 0;
+	emotionArray["serene"] = 0;
+	emotionArray["relaxed"] = 0;
 	
 	for (var i = 0; i < words.length; i++) {
 		for (var a = 0; a < happyData[0].length; a++) {
@@ -423,6 +448,24 @@ function runSentimentAnalysis(song) {
 		for (var a = 0; a < excitedData[0].length; a++) {
 			if (excitedData[0][a].Excited.replace(" ", "") === words[i]) {
 				emotionArray["excited"]++;
+			}
+		}
+		
+		for (var a = 0; a < fatiguedData[0].length; a++) {
+			if (fatiguedData[0][a].Fatigued.replace(" ", "") === words[i]) {
+				emotionArray["fatigued"]++;
+			}
+		}
+		
+		for (var a = 0; a < relaxedData[0].length; a++) {
+			if (relaxedData[0][a].Relaxed.replace(" ", "") === words[i]) {
+				emotionArray["relaxed"]++;
+			}
+		}
+		
+		for (var a = 0; a < stressedData[0].length; a++) {
+			if (stressedData[0][a].Stressed.replace(" ", "") === words[i]) {
+				emotionArray["stressed"]++;
 			}
 		}
 	}

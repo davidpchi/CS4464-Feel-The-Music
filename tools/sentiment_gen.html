@@ -13,7 +13,7 @@ var depth = 2;
 $(document).ready(function(){
 
 	//TODO: Change this line
-	var emotion = "happy";
+	var emotion = "Fatigued";
 
 	var wordListSeed = {};
 	wordListSeed[emotion] = {word:emotion, synonyms:[], count: 0}
@@ -54,7 +54,7 @@ $(document).ready(function(){
 								wordList[myWord].synonyms[newWord.word] = newWord;
 
 								//console.log(wordList[myWord].synonyms);
-								if (wordList[myWord].count <= 2) {
+								if (wordList[myWord].count <= 1) {
 									myFunction(wordList[myWord].synonyms, newWord.word);
 								}
 							}
