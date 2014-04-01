@@ -3,6 +3,8 @@ var feedlimit=100;
 var rssoutput="<b>Latest Slashdot News:</b><br /><ul>";
 
 var svg;
+var tooltip;
+
 var data={};
 var xA=0;
 var yA=0;
@@ -23,6 +25,7 @@ var excitedData = [];
 var fatiguedData = [];
 var relaxedData = [];
 var stressedData = [];
+var increasingWords = [];
 
 var colorArray = ['rgb(141,211,199)','rgb(255,255,179)','rgb(190,186,218)','rgb(251,128,114)','rgb(128,177,211)','rgb(253,180,98)','rgb(179,222,105)','rgb(252,205,229)','rgb(217,217,217)','rgb(188,128,189)','rgb(204,235,197)','rgb(255,237,111)'];
 
@@ -35,6 +38,15 @@ function init(){
 		.attr("width", 1000)
 		.attr("height", 2750);
 
+	tooltip = d3.select("body")
+		.append("div")
+		.attr("id", "cust_tooltip")
+		.style("position", "absolute")
+		.style("z-index", "10")
+		.style("color", "white")
+		.style("visibility", "hidden")
+		.text("a simple tooltip");
+			
 	document.getElementById("vis").style.display="none";
 	document.getElementById('loading').style.display='block';
 	$('#loading_text').text("Loading emotion data");
@@ -92,10 +104,16 @@ function init(){
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
+	
+	d3.csv("tools/increasingWords.csv", function(d) {
+		increasingWords.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
 }
 
 function isDataLoaded() {
-	return (happyData.length != 0 && sadData.length != 0 && angryData.length != 0 && nervousData != 0 && excitedData != 0 && jealousData != 0 && stressedData != 0 && relaxedData != 0 && fatiguedData != 0);
+	return (happyData.length != 0 && sadData.length != 0 && angryData.length != 0 && nervousData != 0 && excitedData != 0 && jealousData != 0 && stressedData != 0 && relaxedData != 0 && fatiguedData != 0 && increasingWords != 0);
 }
 
 function rssfeedsetup(){
@@ -313,7 +331,7 @@ function handleData(finalData) {
 		finalDataLength++;
 	}
 
-	$('#loading_text').text("Starting sentiment analysis");
+	$('#loading_text').html("Please wait. This may take up to a minute. <br> Starting sentiment analysis");
 	
 	var index = 0;
 	for (var test in finalData) {
@@ -349,6 +367,19 @@ function finishDisplay() {
 	
 	var yA = 50;
 	var xA = 300;
+
+	//here we will calculate the overall sentiment analysis
+	var finalEmotionArray = [];
+	finalEmotionArray["happy"] = 0;
+	finalEmotionArray["sad"] = 0;
+	finalEmotionArray["angry"] = 0;
+	finalEmotionArray["nervous"] = 0;
+	finalEmotionArray["jealous"] = 0;
+	finalEmotionArray["excited"] = 0;
+	finalEmotionArray["stressed"] = 0;
+	finalEmotionArray["fatigued"] = 0;
+	finalEmotionArray["serene"] = 0;
+	finalEmotionArray["relaxed"] = 0;
 		
 	for (var test in finalData) {
 		var color = "white";
@@ -359,9 +390,7 @@ function finishDisplay() {
 		//d3.selectAll("#vis").append("p")
 		//	.style("color", color)
 		//	.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ": confidence/strength= " + finalData[test].confidence+"/"+finalData[test].strength); //+ finalData[test].lyrics);	
-		
-		//we need to generate an array of the arc draw angles
-		
+	
 		var totalEmotionsCalc = 0;
 		var myEmotionArray = finalData[test].emotionArray;
 		
@@ -380,16 +409,31 @@ function finishDisplay() {
 				.startAngle(lastAngle)
 				.endAngle(endAngle);
 		
+			//TODO: NEED TO FIGURE OUT TOOLTIPS
 			svg.append("path")
 				.attr("d", arc)
 				.attr("transform", "translate(" + xA + "," + yA + ")")
-				.style("fill", colorArray[index]);
+				.style("fill", colorArray[index])
+				.on('mouseover', function(){
+					$("#cust_tooltip").text(pop + ": " + myEmotionArray[pop]);
+					return tooltip.style("visibility", "visible");
+				})
+				.on('mousemove', function(){
+					return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+				})
+				.on('mouseout', function(){
+					return tooltip.style("visibility", "hidden");
+				});
 				
 			lastAngle = endAngle;
 			index++;
 		}		
 		
 		var text = finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ": confidence/strength= " + finalData[test].confidence+"/"+finalData[test].strength; //+ finalData[test].lyrics)
+		
+		console.log(finalData[test].mood);
+		
+		finalEmotionArray[finalData[test].mood] += (finalData[test].confidence * finalData[test].strength);
 		
 		svg.append("text")
 			.attr('x', xA+110)
@@ -399,6 +443,15 @@ function finishDisplay() {
 			
 		yA+= 110;
 	}
+	
+	console.log(finalEmotionArray);
+	
+	var finalSentimentText = "";
+	for (var pop in finalEmotionArray) {
+		finalSentimentText += "<br>" + pop + ": " + finalEmotionArray[pop];
+	}
+	
+	document.getElementById("final_sentiment").innerHTML = finalSentimentText;
 	
 	document.getElementById("vis").style.display="block";
 	document.getElementById('loading').style.display='none';
@@ -419,53 +472,87 @@ function runSentimentAnalysis(song) {
 	emotionArray["serene"] = 0;
 	emotionArray["relaxed"] = 0;
 	
+	//multiplier used to increase/decrease the value of words
+	var multiplier = 1;
+	
 	for (var i = 0; i < words.length; i++) {
+		//check for negation words
+		if (words[i] === "not" || words[i] === "never" || words[i] === "no") {
+			multiplier*=-1;
+		}
+		
+		//check for increasing words
+		for (var a = 0; a < increasingWords[0].length; a++) {
+			if (increasingWords[0][a].very.replace(" ", "") === words[i]) {
+				multiplier*=-2;
+			}
+		}
+	
+		//check for regular emotions, taking into account the multiplier
 		for (var a = 0; a < happyData[0].length; a++) {
 			if (happyData[0][a].Happy.replace(" ", "") === words[i]) {
-				emotionArray["happy"]++;
+				emotionArray["happy"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 		for (var a = 0; a < sadData[0].length; a++) {
 			if (sadData[0][a].Sad.replace(" ", "") === words[i]) {
-				emotionArray["sad"]++;
+				emotionArray["sad"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 		for (var a = 0; a < angryData[0].length; a++) {
 			if (angryData[0][a].Angry.replace(" ", "") === words[i]) {
-				emotionArray["angry"]++;
+				emotionArray["angry"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 		for (var a = 0; a < nervousData[0].length; a++) {
 			if (nervousData[0][a].Nervous.replace(" ", "") === words[i]) {
-				emotionArray["nervous"]++;
+				emotionArray["nervous"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 		for (var a = 0; a < jealousData[0].length; a++) {
 			if (jealousData[0][a].Jealous.replace(" ", "") === words[i]) {
-				emotionArray["jealous"]++;
+				emotionArray["jealous"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 		for (var a = 0; a < excitedData[0].length; a++) {
 			if (excitedData[0][a].Excited.replace(" ", "") === words[i]) {
-				emotionArray["excited"]++;
+				emotionArray["excited"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 		
 		for (var a = 0; a < fatiguedData[0].length; a++) {
 			if (fatiguedData[0][a].Fatigued.replace(" ", "") === words[i]) {
-				emotionArray["fatigued"]++;
+				emotionArray["fatigued"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 		
 		for (var a = 0; a < relaxedData[0].length; a++) {
 			if (relaxedData[0][a].Relaxed.replace(" ", "") === words[i]) {
-				emotionArray["relaxed"]++;
+				emotionArray["relaxed"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 		
 		for (var a = 0; a < stressedData[0].length; a++) {
 			if (stressedData[0][a].Stressed.replace(" ", "") === words[i]) {
-				emotionArray["stressed"]++;
+				emotionArray["stressed"]+= 1 * multiplier;
+				//reset the multiplier
+				multiplier = 1;
 			}
 		}
 	}
