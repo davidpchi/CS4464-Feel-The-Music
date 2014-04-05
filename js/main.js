@@ -172,6 +172,8 @@ function doAjax(url, callBack){
 			//TODO: NEED TO FIX THIS!!! decrement our overall count so the app doesn't hang
 			finalDataLength--;
 			console.log(errormsg, data);
+			//display the error message if we fail to complete a page load operation
+			displayError(errormsg)
 		  }
 		}
 	  );
@@ -190,6 +192,11 @@ function filterData(data){
 	data = data.replace(/<script[^>]*>[\S\s]*?<\/script>/g,'');
 	data = data.replace(/<script.*\/>/,'');
 	return data;
+}
+
+function displayError(errormsg) {
+	document.getElementById("loading_img").innerHTML = errormsg;
+	document.getElementById("loading_text").src="http://www.hodtech.net/uploads/6/9/7/2/6972344/1659484_orig.png";
 }
 
 function processFeed(result){
@@ -382,9 +389,6 @@ function finishDisplay() {
 	finalEmotionArray["relaxed"] = 0;
 		
 	for (var test in finalData) {
-	
-		if (test === "SELFIE The Chainsmokers")
-			console.log("HERE");
 			
 		var color = "white";
 		if (finalData[test].mood === "negative") 
@@ -416,14 +420,14 @@ function finishDisplay() {
 				.startAngle(lastAngle)
 				.endAngle(endAngle);
 		
-			(function(pop) {
+			(function(pop,test) {
 			//TODO: NEED TO FIGURE OUT TOOLTIPS
 			svg.append("path")
 				.attr("d", arc)
 				.attr("transform", "translate(" + xA + "," + yA + ")")
 				.style("fill", colorArray[index])
 				.on('mouseover', function(){
-					$("#cust_tooltip").text(pop + ": " + myEmotionArray[pop]);
+					$("#cust_tooltip").text(finalData[test].title + ": " + pop + ": " + finalData[test].emotionArray[pop]);
 					return tooltip.style("visibility", "visible");
 				})
 				.on('mousemove', function(){
@@ -433,7 +437,7 @@ function finishDisplay() {
 					return tooltip.style("visibility", "hidden");
 				});
 							
-			})(pop);
+			})(pop,test);
 		
 			lastAngle = endAngle;
 			index++;
@@ -506,58 +510,112 @@ function runSentimentAnalysis(song) {
 		//check for regular emotions, taking into account the multiplier
 		for (var a = 0; a < happyData[0].length; a++) {
 			if (happyData[0][a].Happy.replace(" ", "") === words[i]) {
-				emotionArray["happy"]+= 1 * multiplier;
+			
+				//handle antonyms and negation
+				if (multiplier > 0)
+					emotionArray["happy"]+= 1 * multiplier;
+				else 
+					emotionArray["sad"]+= -1 * multiplier;
+					
 				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < sadData[0].length; a++) {
 			if (sadData[0][a].Sad.replace(" ", "") === words[i]) {
-				emotionArray["sad"]+= 1 * multiplier;
+			
+				//handle antonyms and negation
+				if (multiplier > 0)
+					emotionArray["sad"]+= 1 * multiplier;
+				else
+					emotionArray["happy"]+= -1 * multiplier;
+
 				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < angryData[0].length; a++) {
 			if (angryData[0][a].Angry.replace(" ", "") === words[i]) {
-				emotionArray["angry"]+= 1 * multiplier;
+				
+				//handle antonyms and negation
+				if (multiplier > 0)
+					emotionArray["angry"]+= 1 * multiplier;
+				else 
+					emotionArray["relaxed"]+= -1 * multiplier;
+					
 				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < nervousData[0].length; a++) {
 			if (nervousData[0][a].Nervous.replace(" ", "") === words[i]) {
-				emotionArray["nervous"]+= 1 * multiplier;
+				
+				//handle antonyms and negation
+				if (multiplier > 0)
+					emotionArray["nervous"]+= 1 * multiplier;
+				else 
+					emotionArray["excited"]+= -1 * multiplier;	
+					
 				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < jealousData[0].length; a++) {				
 			if (jealousData[0][a].Jealous.replace(" ", "") === words[i]) {
-				emotionArray["jealous"]+= 1 * multiplier;
+				
+				//handle antonyms and negation
+				if (multiplier > 0)
+					emotionArray["jealous"]+= 1 * multiplier;
+				else
+					emotionArray["relaxed"]+= -1 * multiplier;
+					
 				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < excitedData[0].length; a++) {
 			if (excitedData[0][a].Excited.replace(" ", "") === words[i]) {
-				emotionArray["excited"]+= 1 * multiplier;
+				
+				//handle antonyms and negation
+				if (multiplier > 0)				
+					emotionArray["excited"]+= 1 * multiplier;
+				else
+					emotionArray["fatigued"]+= -1 * multiplier;
+				
 				resetMultiplier = true;
 			}
 		}
 		
 		for (var a = 0; a < fatiguedData[0].length; a++) {
 			if (fatiguedData[0][a].Fatigued.replace(" ", "") === words[i]) {
-				emotionArray["fatigued"]+= 1 * multiplier;
+				
+				//handle antonyms and negation
+				if (multiplier > 0)				
+					emotionArray["fatigued"]+= 1 * multiplier;
+				else
+					emotionArray["excited"]+= -1 * multiplier;
+				
 				resetMultiplier = true;
 			}
 		}
 		
 		for (var a = 0; a < relaxedData[0].length; a++) {
 			if (relaxedData[0][a].Relaxed.replace(" ", "") === words[i]) {
-				emotionArray["relaxed"]+= 1 * multiplier;
+			
+				//handle antonyms and negation
+				if (multiplier > 0)				
+					emotionArray["relaxed"]+= 1 * multiplier;
+				else
+					emotionArray["stressed"]+= 1 * multiplier;
+					
 				resetMultiplier = true;
 			}
 		}
 		
 		for (var a = 0; a < stressedData[0].length; a++) {
 			if (stressedData[0][a].Stressed.replace(" ", "") === words[i]) {
-				emotionArray["stressed"]+= 1 * multiplier;
+			
+				//handle antonyms and negation
+				if (multiplier > 0)				
+					emotionArray["stressed"]+= 1 * multiplier;
+				else
+					emotionArray["relaxed"]+= -1 * multiplier;
+					
 				resetMultiplier = true;
 			}
 		}
