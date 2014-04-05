@@ -242,7 +242,7 @@ function processFeed(result){
 			//run our own sentiment analysis engine in the handle final data
 			var titleAndArtist = getTitleAndArtist(thefeeds[anotherIndex].title);
 
-			finalData[thefeeds[anotherIndex].title] = {
+			finalData[titleAndArtist[0] + " " + titleAndArtist[1]] = {
 				mood: "neutral",
 				title: titleAndArtist[0],
 				artist: titleAndArtist[1],
@@ -382,6 +382,10 @@ function finishDisplay() {
 	finalEmotionArray["relaxed"] = 0;
 		
 	for (var test in finalData) {
+	
+		if (test === "SELFIE The Chainsmokers")
+			console.log("HERE");
+			
 		var color = "white";
 		if (finalData[test].mood === "negative") 
 			color = "red";
@@ -398,6 +402,9 @@ function finishDisplay() {
 			totalEmotionsCalc += myEmotionArray[pop];
 		}
 		
+		if (totalEmotionsCalc == 0)
+			totalEmotionsCalc = 1;
+		
 		var lastAngle = 0;
 		var index = 0;
 		for (var pop in myEmotionArray) {
@@ -409,6 +416,7 @@ function finishDisplay() {
 				.startAngle(lastAngle)
 				.endAngle(endAngle);
 		
+			(function(pop) {
 			//TODO: NEED TO FIGURE OUT TOOLTIPS
 			svg.append("path")
 				.attr("d", arc)
@@ -424,7 +432,9 @@ function finishDisplay() {
 				.on('mouseout', function(){
 					return tooltip.style("visibility", "hidden");
 				});
-				
+							
+			})(pop);
+		
 			lastAngle = endAngle;
 			index++;
 		}		
@@ -474,10 +484,15 @@ function runSentimentAnalysis(song) {
 	
 	//multiplier used to increase/decrease the value of words
 	var multiplier = 1;
-	
+	var resetMultiplier = false;
 	for (var i = 0; i < words.length; i++) {
+		//clean the words of any punctuation
+		words[i] = words[i].replace("?", "");
+		words[i] = words[i].replace("!", "");
+		words[i] = words[i].replace(".", "");
+		
 		//check for negation words
-		if (words[i] === "not" || words[i] === "never" || words[i] === "no") {
+		if (words[i] === "not" || words[i] === "never" || words[i] === "no" || words[i] === "hate") {
 			multiplier*=-1;
 		}
 		
@@ -492,68 +507,65 @@ function runSentimentAnalysis(song) {
 		for (var a = 0; a < happyData[0].length; a++) {
 			if (happyData[0][a].Happy.replace(" ", "") === words[i]) {
 				emotionArray["happy"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < sadData[0].length; a++) {
 			if (sadData[0][a].Sad.replace(" ", "") === words[i]) {
 				emotionArray["sad"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < angryData[0].length; a++) {
 			if (angryData[0][a].Angry.replace(" ", "") === words[i]) {
 				emotionArray["angry"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < nervousData[0].length; a++) {
 			if (nervousData[0][a].Nervous.replace(" ", "") === words[i]) {
 				emotionArray["nervous"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
 		}
-		for (var a = 0; a < jealousData[0].length; a++) {
+		for (var a = 0; a < jealousData[0].length; a++) {				
 			if (jealousData[0][a].Jealous.replace(" ", "") === words[i]) {
 				emotionArray["jealous"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
 		}
 		for (var a = 0; a < excitedData[0].length; a++) {
 			if (excitedData[0][a].Excited.replace(" ", "") === words[i]) {
 				emotionArray["excited"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
 		}
 		
 		for (var a = 0; a < fatiguedData[0].length; a++) {
 			if (fatiguedData[0][a].Fatigued.replace(" ", "") === words[i]) {
 				emotionArray["fatigued"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
 		}
 		
 		for (var a = 0; a < relaxedData[0].length; a++) {
 			if (relaxedData[0][a].Relaxed.replace(" ", "") === words[i]) {
 				emotionArray["relaxed"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
 		}
 		
 		for (var a = 0; a < stressedData[0].length; a++) {
 			if (stressedData[0][a].Stressed.replace(" ", "") === words[i]) {
 				emotionArray["stressed"]+= 1 * multiplier;
-				//reset the multiplier
-				multiplier = 1;
+				resetMultiplier = true;
 			}
+		}
+		
+		if (resetMultiplier == true) {
+			//reset the multiplier
+			multiplier = 1;
+			resetMultiplier = false;
 		}
 	}
 	
