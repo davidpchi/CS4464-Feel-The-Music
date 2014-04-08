@@ -10,6 +10,7 @@ var xA=0;
 var yA=0;
 
 var finalData = {};
+var finalEmotionArray = [];
 
 var isBillBoard100 = true;
 var finalDataLength = 0;
@@ -38,7 +39,7 @@ function init(){
 	svg = d3.selectAll("#vis").append("svg")
 		.attr("width", 1000)
 		.attr("height", 2750);
-
+		
 	tooltip = d3.select("body")
 		.append("div")
 		.attr("id", "cust_tooltip")
@@ -416,7 +417,6 @@ function finishDisplay() {
 	var xA = 300;
 
 	//here we will calculate the overall sentiment analysis
-	var finalEmotionArray = [];
 	finalEmotionArray["happy"] = 0;
 	finalEmotionArray["sad"] = 0;
 	finalEmotionArray["angry"] = 0;
@@ -500,12 +500,52 @@ function finishDisplay() {
 	
 	console.log(finalEmotionArray);
 	
-	var finalSentimentText = "";
+	//create the overall pie chart
+	var svg2 = d3.selectAll("#final_sentiment").append("svg")
+		.attr("width", 1000)
+		.attr("height", 200);
+	
+	var finalTotalEmotionsCalc = 0;
 	for (var pop in finalEmotionArray) {
-		finalSentimentText += "<br>" + pop + ": " + finalEmotionArray[pop];
+		finalTotalEmotionsCalc+=finalEmotionArray[pop];
 	}
 	
-	document.getElementById("final_sentiment").innerHTML = finalSentimentText;
+	var lastAngle = 0;
+	var index = 0;
+	for (var pop in finalEmotionArray) {
+		var ratio = finalEmotionArray[pop]/ finalTotalEmotionsCalc;
+		var endAngle = ratio * 2 * Math.PI + lastAngle;
+		var arc = d3.svg.arc()
+			.innerRadius(25)
+			.outerRadius(50)
+			.startAngle(lastAngle)
+			.endAngle(endAngle);
+	
+		(function(pop,test) {
+		svg2.append("path")
+			.attr("d", arc)
+			.attr("transform", "translate(" + 300 + "," + 60 + ")")
+			.style("fill", colorArray[index])
+			.on('mouseover', function(){
+				$("#cust_tooltip").text(pop + ": " + finalEmotionArray[pop]);
+				return tooltip.style("visibility", "visible");
+			})
+			.on('mousemove', function(){
+				return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+			})
+			.on('mouseout', function(){
+				return tooltip.style("visibility", "hidden");
+			});
+						
+		})(pop,test);
+	
+		lastAngle = endAngle;
+		index++;
+	}	
+	
+	//var finalSentimentText = "";
+	
+	//document.getElementById("final_sentiment").innerHTML = finalSentimentText;
 	
 	document.getElementById("vis").style.display="block";
 	document.getElementById('loading').style.display='none';
