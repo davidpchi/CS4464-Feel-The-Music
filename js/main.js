@@ -10,6 +10,7 @@ var xA=0;
 var yA=0;
 
 var finalData = {};
+var finalEmotionArray = [];
 
 var isBillBoard100 = true;
 var finalDataLength = 0;
@@ -26,6 +27,7 @@ var fatiguedData = [];
 var relaxedData = [];
 var stressedData = [];
 var increasingWords = [];
+var decreasingWords = [];
 
 var colorArray = ['rgb(141,211,199)','rgb(255,255,179)','rgb(190,186,218)','rgb(251,128,114)','rgb(128,177,211)','rgb(253,180,98)','rgb(179,222,105)','rgb(252,205,229)','rgb(217,217,217)','rgb(188,128,189)','rgb(204,235,197)','rgb(255,237,111)'];
 
@@ -37,7 +39,7 @@ function init(){
 	svg = d3.selectAll("#vis").append("svg")
 		.attr("width", 1000)
 		.attr("height", 2750);
-
+		
 	tooltip = d3.select("body")
 		.append("div")
 		.attr("id", "cust_tooltip")
@@ -110,10 +112,16 @@ function init(){
 		if (isDataLoaded()) 
 			rssfeedsetup();
 	});
+	
+	d3.csv("tools/decreasingWords.csv", function(d) {
+		decreasingWords.push(d);
+		if (isDataLoaded()) 
+			rssfeedsetup();
+	});
 }
 
 function isDataLoaded() {
-	return (happyData.length != 0 && sadData.length != 0 && angryData.length != 0 && nervousData != 0 && excitedData != 0 && jealousData != 0 && stressedData != 0 && relaxedData != 0 && fatiguedData != 0 && increasingWords != 0);
+	return (happyData.length != 0 && sadData.length != 0 && angryData.length != 0 && nervousData.length != 0 && excitedData.length != 0 && jealousData.length != 0 && stressedData.length != 0 && relaxedData.length != 0 && fatiguedData.length != 0 && increasingWords.length != 0 && decreasingWords.length != 0);
 }
 
 function rssfeedsetup(){
@@ -170,10 +178,10 @@ function doAjax(url, callBack){
 		  } else {
 			var errormsg = "<p>Error: can't load the page.</p>";
 			//TODO: NEED TO FIX THIS!!! decrement our overall count so the app doesn't hang
-			finalDataLength--;
-			console.log(errormsg, data);
+			//finalDataLength--;
+			//console.log(errormsg, data);
 			//display the error message if we fail to complete a page load operation
-			displayError(errormsg)
+			displayError(errormsg);
 		  }
 		}
 	  );
@@ -195,8 +203,41 @@ function filterData(data){
 }
 
 function displayError(errormsg) {
-	document.getElementById("loading_img").innerHTML = errormsg;
-	document.getElementById("loading_text").src="http://www.hodtech.net/uploads/6/9/7/2/6972344/1659484_orig.png";
+	document.getElementById("loading_text").innerHTML = errormsg;
+	document.getElementById("loading_img").src="http://www.hodtech.net/uploads/6/9/7/2/6972344/1659484_orig.png";
+	
+	//debug method:
+	
+		// if it is an external URI
+	if(url.match('^http')){
+	  // call YQL
+	  $.getJSON("http://query.yahooapis.com/v1/public/yql?"+
+				"q=select%20*%20from%20html%20where%20url%3D%22"+
+				encodeURIComponent(url)+
+				"%22&format=xml'&callback=?",
+		// this function gets the data from the successful 
+		// JSON-P call
+		function(data){
+		  // if there is data, filter it and render it out
+		  if(data.results[0]){
+			var data = filterData(data.results[0]);
+			callBack(data);
+		  // otherwise tell the world that something went wrong
+		  } else {
+			var errormsg = "<p>Error: can't load the page.</p>";
+			//TODO: NEED TO FIX THIS!!! decrement our overall count so the app doesn't hang
+			finalDataLength--;
+			console.log(errormsg, data);
+			//display the error message if we fail to complete a page load operation
+			displayError(errormsg);
+			callBack(data);
+		  }
+		}
+	  );
+	// if it is not an external URI, use Ajax load()
+	} else {
+	  $('#target').load(url);
+	}
 }
 
 function processFeed(result){
@@ -342,7 +383,7 @@ function handleData(finalData) {
 	
 	var index = 0;
 	for (var test in finalData) {
-		(function(test, finalData) {
+		var methodToRun = (function(test, finalData) {
 			var testFunction = function(data) {
 				finalData[test].lyrics = getLyrics(data);
 				
@@ -364,7 +405,7 @@ function handleData(finalData) {
 			
 			var url = "http://lyrics.wikia.com/"+finalData[test].artist.split(' ').join('_') + ":" + finalData[test].title.split(' ').join('_');
 			console.log(url);
-			doAjax(url, testFunction); 
+			doAjax(url, testFunction);
 		})(test,finalData);
 	}
 }
@@ -376,7 +417,6 @@ function finishDisplay() {
 	var xA = 300;
 
 	//here we will calculate the overall sentiment analysis
-	var finalEmotionArray = [];
 	finalEmotionArray["happy"] = 0;
 	finalEmotionArray["sad"] = 0;
 	finalEmotionArray["angry"] = 0;
@@ -460,12 +500,52 @@ function finishDisplay() {
 	
 	console.log(finalEmotionArray);
 	
-	var finalSentimentText = "";
+	//create the overall pie chart
+	var svg2 = d3.selectAll("#final_sentiment").append("svg")
+		.attr("width", 1000)
+		.attr("height", 200);
+	
+	var finalTotalEmotionsCalc = 0;
 	for (var pop in finalEmotionArray) {
-		finalSentimentText += "<br>" + pop + ": " + finalEmotionArray[pop];
+		finalTotalEmotionsCalc+=finalEmotionArray[pop];
 	}
 	
-	document.getElementById("final_sentiment").innerHTML = finalSentimentText;
+	var lastAngle = 0;
+	var index = 0;
+	for (var pop in finalEmotionArray) {
+		var ratio = finalEmotionArray[pop]/ finalTotalEmotionsCalc;
+		var endAngle = ratio * 2 * Math.PI + lastAngle;
+		var arc = d3.svg.arc()
+			.innerRadius(25)
+			.outerRadius(50)
+			.startAngle(lastAngle)
+			.endAngle(endAngle);
+	
+		(function(pop,test) {
+		svg2.append("path")
+			.attr("d", arc)
+			.attr("transform", "translate(" + 300 + "," + 60 + ")")
+			.style("fill", colorArray[index])
+			.on('mouseover', function(){
+				$("#cust_tooltip").text(pop + ": " + finalEmotionArray[pop]);
+				return tooltip.style("visibility", "visible");
+			})
+			.on('mousemove', function(){
+				return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");
+			})
+			.on('mouseout', function(){
+				return tooltip.style("visibility", "hidden");
+			});
+						
+		})(pop,test);
+	
+		lastAngle = endAngle;
+		index++;
+	}	
+	
+	//var finalSentimentText = "";
+	
+	//document.getElementById("final_sentiment").innerHTML = finalSentimentText;
 	
 	document.getElementById("vis").style.display="block";
 	document.getElementById('loading').style.display='none';
@@ -495,15 +575,17 @@ function runSentimentAnalysis(song) {
 		words[i] = words[i].replace("!", "");
 		words[i] = words[i].replace(".", "");
 		
-		//check for negation words
-		if (words[i] === "not" || words[i] === "never" || words[i] === "no" || words[i] === "hate") {
-			multiplier*=-1;
+		//check for decreasing words
+		for (var a = 0; a < decreasingWords[0].length; a++) {
+			if (decreasingWords[0][a].not.replace(" ", "") === words[i]) {
+				multiplier*=(-1);
+			}
 		}
 		
 		//check for increasing words
 		for (var a = 0; a < increasingWords[0].length; a++) {
 			if (increasingWords[0][a].very.replace(" ", "") === words[i]) {
-				multiplier*=-2;
+				multiplier*=2;
 			}
 		}
 	
