@@ -1,0 +1,104 @@
+body {
+	background: #363A35 url("icons/grayPentagon.png");
+	font-family: Roboto;
+}
+
+h1 {
+	font-weight: 100;
+	font-size: 64px;
+	color: #fff;
+	text-shadow: 2px 2px 2px #3498db;
+	/*-moz-border-radius: 50%; 
+	border-radius: 50%;
+	background: rgba(0, 0, 0, .42);
+	width: 450px;
+	height: 450px;*/
+	position: relative;
+}
+
+h2 {
+	font-weight: 100;
+	font-size: 36px;
+	color: #3498db;
+	margin-top: 75px;
+}
+
+#block {
+	font-weight: 300;
+	font-style: normal;
+	font-size: 18px;
+	color: #fff;
+	background: #3498db;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+	margin: auto;
+	padding: 5px 15px;
+	text-align: center;
+	vertical-align: center;
+	position: relative; 
+	top: 100px;
+	display: inline-block;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	/*transition: transform 300ms;*/
+}
+
+#header {
+	background: rgba(0,0,0, .75);
+	padding: 30px;
+	width: 100%;
+	height: 920px;
+	margin: 0 auto;
+	overflow: hidden;
+	color: #fff;
+	display:none;
+	display: block;
+	background-color: #ecf0f1; 
+	background: url('vinyl.jpg') fixed 50% 50%;
+}
+
+label {
+	display: inline-block;
+	width: 5em;
+}
+
+#container  {
+	width: 820px;
+	line-height: 1.65em;
+	text-align: center;
+	position: relative;
+	background: rgba(0, 0, 0, .5);
+	padding: 30px;
+	border-radius: 5px;
+	-moz-border-radius: 5px;
+	margin: 30px auto 30px auto;
+    max-width: 820px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+	z-index: 1;
+}
+
+#loading_img {
+	margin-top: -30px;
+}
+
+#rss_name {
+	font-size: 16px;
+	font-weight: 300;
+	color: #363A35;
+}
+
+#final_sentiment {
+	margin-bottom: 30px;
+	font-size: 16px;
+	color: #ecf0f1;
+	font-weight: 100;
+}
+
+#loading_text {
+	font-size: 12px;
+	color: #ecf0f1;
+}
+
+#copy {
+	font-size: 10px;
+	color: #363A35;
+}

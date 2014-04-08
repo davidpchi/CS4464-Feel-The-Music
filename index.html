@@ -8,6 +8,8 @@
 	<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+	<link rel="stylesheet" href="style.css">
+	<link href='http://fonts.googleapis.com/css?family=Roboto:100,300,500' rel='stylesheet' type='text/css'>
 	<script type="text/javascript" src="https://www.google.com/jsapi"></script>
 	<script type="text/javascript">
 		google.load("feeds", "1") //Load Google Ajax Feed API (version 1)
@@ -19,36 +21,27 @@
 	});
 	</script>
 	<style>
-	body {
-		background-color: black;
-	}
 	
-	h1 {
-		color: white;
-	}
-	
-	h2 {
-		color: white;
-	}
-	
-	label {
-		display: inline-block;
-		width: 5em;
-	}
 	</style>
 </head>
 <body onload="init()">
 	<center>
-	<h1>Feel the Music</h1>
-	<h2>Currently Viewing:<div id="rss_name"></div></h2>
-	<div id="final_sentiment"></div>
-	<div id="vis">
+	<div id="header">
+		<h1>Feel the Music</h1>
+		<div id="block">SCROLL&nbsp;&#10549;</div>
 	</div>
-	<div id="loading">
-		<img id="loading_img" src="loading.gif" style="width: 64px; height: 64px">
-		<div id="loading_text"></div>
+	<h2>Currently Viewing:<br><div id="rss_name"></div></h2>
+	<div id="container">
+		<div id="final_sentiment"></div>
+		<div id="vis"></div>
+		<div id="loading">
+			<img id="loading_img" src="loading.gif" style="width: 64px; height: 64px">
+			<div id="loading_text"></div>
+		</div>
 	</div>
-	<p>GT CS 4464 2014</p>
+	<div id="copy">
+	GT CS-4464, 2014 <br/> © David P. Chi, Will Folsom, Chelsea Mitchell 2014 
+	</div>
 	</center>
 	<script type="text/javascript">
 		var _gaq = _gaq || [];
