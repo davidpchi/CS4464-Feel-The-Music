@@ -414,7 +414,7 @@ function finishDisplay() {
 	console.log("running finish data display");
 	
 	var yA = 50;
-	var xA = 300;
+	var xA = 50;
 
 	//here we will calculate the overall sentiment analysis
 	finalEmotionArray["happy"] = 0;
@@ -494,6 +494,8 @@ function finishDisplay() {
 			.attr('y', yA)
 			.attr('fill', 'red')
 			.text(text);
+		
+		
 			
 		yA+= 110;
 	}
