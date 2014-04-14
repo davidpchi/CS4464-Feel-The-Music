@@ -177,9 +177,6 @@ function doAjax(url, callBack){
 		  // otherwise tell the world that something went wrong
 		  } else {
 			var errormsg = "<p>Error: can't load the page.</p>";
-			//TODO: NEED TO FIX THIS!!! decrement our overall count so the app doesn't hang
-			//finalDataLength--;
-			//console.log(errormsg, data);
 			//display the error message if we fail to complete a page load operation
 			displayError(errormsg);
 		  }
@@ -205,10 +202,8 @@ function filterData(data){
 function displayError(errormsg) {
 	document.getElementById("loading_text").innerHTML = errormsg;
 	document.getElementById("loading_img").src="http://www.hodtech.net/uploads/6/9/7/2/6972344/1659484_orig.png";
-	
-	//debug method:
-	
-		// if it is an external URI
+		
+	// if it is an external URI
 	if(url.match('^http')){
 	  // call YQL
 	  $.getJSON("http://query.yahooapis.com/v1/public/yql?"+
@@ -461,13 +456,13 @@ function finishDisplay() {
 				.endAngle(endAngle);
 		
 			(function(pop,test) {
-			//TODO: NEED TO FIGURE OUT TOOLTIPS
 			svg.append("path")
 				.attr("d", arc)
 				.attr("transform", "translate(" + xA + "," + yA + ")")
 				.style("fill", colorArray[index])
 				.on('mouseover', function(){
-					$("#cust_tooltip").text(finalData[test].title + ": " + pop + ": " + finalData[test].emotionArray[pop]);
+					//append tooltips with emotion values
+					$("#cust_tooltip").text(pop + ": " + finalData[test].emotionArray[pop]);
 					return tooltip.style("visibility", "visible");
 				})
 				.on('mousemove', function(){
@@ -492,11 +487,9 @@ function finishDisplay() {
 		svg.append("text")
 			.attr('x', xA+110)
 			.attr('y', yA)
-			.attr('fill', 'red')
+			.attr('fill', colorArray[sentimentToColorID(finalData[test].mood)] )
 			.text(text);
-		
-		
-			
+
 		yA+= 110;
 	}
 	
@@ -514,19 +507,25 @@ function finishDisplay() {
 	
 	var lastAngle = 0;
 	var index = 0;
+	
+	var finalSentimentText = [];
+	
 	for (var pop in finalEmotionArray) {
 		var ratio = finalEmotionArray[pop]/ finalTotalEmotionsCalc;
 		var endAngle = ratio * 2 * Math.PI + lastAngle;
 		var arc = d3.svg.arc()
 			.innerRadius(25)
-			.outerRadius(50)
+			.outerRadius(75)
 			.startAngle(lastAngle)
 			.endAngle(endAngle);
 	
+		finalSentimentText.push(pop + ": " + finalEmotionArray[pop]);
+	
+		//draw a pie chart
 		(function(pop,test) {
 		svg2.append("path")
 			.attr("d", arc)
-			.attr("transform", "translate(" + 300 + "," + 60 + ")")
+			.attr("transform", "translate(" + 100 + "," + 75 + ")")
 			.style("fill", colorArray[index])
 			.on('mouseover', function(){
 				$("#cust_tooltip").text(pop + ": " + finalEmotionArray[pop]);
@@ -545,12 +544,45 @@ function finishDisplay() {
 		index++;
 	}	
 	
-	//var finalSentimentText = "";
+	var tempX = 220;
+	var tempY = 25; 
+	for (var i = 0; i < finalSentimentText.length; i++) {
+		svg2.append("text")
+			.attr('x', tempX)
+			.attr('y', tempY)
+			.attr('fill', colorArray[i])
+			.text(finalSentimentText[i]);
+			
+		tempY+=12;
+	}
 	
-	//document.getElementById("final_sentiment").innerHTML = finalSentimentText;
+	//now display the final sentiment text	
 	
 	document.getElementById("vis").style.display="block";
 	document.getElementById('loading').style.display='none';
+}
+
+function sentimentToColorID(mood) {
+	if (mood ==="happy")
+		return 0;
+	else if (mood === "sad") 
+		return 1;
+	else if (mood === "angry")
+		return 2;
+	else if (mood === "nervous")
+		return 3;
+	else if (mood === "jealous")
+		return 4;
+	else if (mood === "excited")
+		return 5;
+	else if (mood === "stressed")
+		return 6;
+	else if (mood === "fatigued")
+		return 7;
+	else if (mood === "serene")
+		return 8;
+	else if (mood === "relaxed")
+		return 9;
 }
 
 function runSentimentAnalysis(song) {
