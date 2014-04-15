@@ -227,7 +227,7 @@ function displayError(errormsg) {
 			var errormsg = "<p>Error: can't load the page.</p>";
 			//TODO: NEED TO FIX THIS!!! decrement our overall count so the app doesn't hang
 			finalDataLength--;
-			console.log(errormsg, data);
+			//console.log(errormsg, data);
 			//display the error message if we fail to complete a page load operation
 			displayError(errormsg);
 			callBack(data);
@@ -250,7 +250,7 @@ function processFeed(result){
 		
 		var anotherIndex = 0; 
 		
-		console.log(thefeeds.length);
+		//console.log(thefeeds.length);
 		
 		for (var i=0; i<thefeeds.length; i++) {
 			rssoutput+="<li><a href='" + thefeeds[i].link + "'>" + thefeeds[i].title + "</a></li>"	
@@ -281,8 +281,8 @@ function processFeed(result){
 			if (artist.indexOf('&') > 0)
 				artist = artist.substring(0, artist.indexOf('&')-1);
 			
-			console.log("" + i +": "+ rawTitle);
-			console.log(artist);
+			//console.log("" + i +": "+ rawTitle);
+			//console.log(artist);
 			data[rawTitle] = thefeeds[i];
 			
 			//TEST DEBUG CODE!!!
@@ -299,7 +299,7 @@ function processFeed(result){
 				rank: anotherIndex
 			}; 
 			anotherIndex++; 
-			console.log(anotherIndex);
+			//console.log(anotherIndex);
 			
 			//provide a cap for billboard
 			if (isBillBoard100) {
@@ -336,7 +336,7 @@ function getTitleAndArtist(rawStr) {
 		
 		//remove featured artists
 		var featureIndex =tempArtist.search("Featuring");
-		console.log(featureIndex);
+		//console.log(featureIndex);
 		if (featureIndex > 0)
 			tempArtist = tempArtist.substring(0,featureIndex);
 	}
@@ -387,7 +387,7 @@ function handleData(finalData) {
 			var testFunction = function(data) {
 				finalData[test].lyrics = getLyrics(data);
 				
-				console.log("data");
+				//console.log("data");
 				
 				//if not using default sentiment analysis, we will have to use our own
 				if (isUsingDefaultSentimentAnaylsis == false)
@@ -404,14 +404,14 @@ function handleData(finalData) {
 			}
 			
 			var url = "http://lyrics.wikia.com/"+finalData[test].artist.split(' ').join('_') + ":" + finalData[test].title.split(' ').join('_');
-			console.log(url);
+			//console.log(url);
 			doAjax(url, testFunction);
 		})(test,finalData);
 	}
 }
 
 function finishDisplay() {
-	console.log("running finish data display");
+	//console.log("running finish data display");
 	
 	var yA = 50;
 	var xA = 50;
@@ -483,10 +483,43 @@ function finishDisplay() {
 			index++;
 		}		
 		
-		var text = finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ": confidence/strength= " + finalData[test].confidence+"/"+finalData[test].strength; //+ finalData[test].lyrics)
+		var text = finalData[test].title + " by " + finalData[test].artist + " is " + finalData[test].mood + ". Confidence = " + finalData[test].confidence + ", Strength = " + finalData[test].strength + "."; //+ finalData[test].lyrics)
 		
-		console.log(finalData[test].mood);
+		var iconPath; 
 		
+		switch (finalData[test].mood) {
+			case "happy":
+				iconPath = "icons/happy.png";
+				break;
+			case "sad":
+				iconPath = "icons/sad.png";
+				break;
+			case "angry":
+				iconPath = "icons/angry.png";
+				break;
+			case "nervous":
+				iconPath = "icons/nervous.png";
+				break;
+			case "jealous":
+				iconPath = "icons/jealous.png";
+				break;
+			case "excited":
+				iconPath = "icons/excited.png";
+				break;
+			case "stressed":
+				iconPath = "icons/stressed.png";
+				break;
+			case "fatigued":
+				iconPath = "icons/fatigued.png";
+				break;
+			case "serene":
+				iconPath = "icons/serene.png";
+				break;
+			case "relaxed":
+				iconPath = "icons/relaxed.png";
+				break;
+		}
+			
 		finalEmotionArray[finalData[test].mood] += (finalData[test].confidence * finalData[test].strength);
 		
 		svg.append("text")
@@ -494,13 +527,16 @@ function finishDisplay() {
 			.attr('y', yA)
 			.attr('fill', 'red')
 			.text(text);
-		
-		
+			
+		svg.append("svg:image")
+			.attr('x', xA-25)
+			.attr('y', yA-25)
+			.attr('width', 50)
+			.attr('height', 50)
+			.attr("xlink:href",iconPath);
 			
 		yA+= 110;
 	}
-	
-	console.log(finalEmotionArray);
 	
 	//create the overall pie chart
 	var svg2 = d3.selectAll("#final_sentiment").append("svg")
