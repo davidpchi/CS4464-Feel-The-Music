@@ -22,13 +22,11 @@ h1 img{
 }
 
 h2 {
-	font-weight: 100;
+	font-weight: 300;
 	font-size: 36px;
-	color: #fff;
-	text-shadow: 2px 2px 2px #3498db;
+	color: #3498db;
 	text-align: center;
 	position: relative;
-	background: rgba(0, 0, 0, .7) url("icons/pentagonOutline.png");
 	margin-top: 100px;
 	padding: 30px;
 }
@@ -113,10 +111,9 @@ label {
 }
 
 #rss_name {
-	font-size: 16px;
 	font-weight: 300;
-	color: #fff;
-	text-shadow: 1px 1px 2px rgb(246, 159, 175);
+	font-size: 16px;
+	color: rgb(246, 159, 175);
 }
 
 #final_sentiment {
@@ -127,8 +124,11 @@ label {
 }
 
 #loading_text {
-	font-size: 12px;
+	margin-bottom: 15px;
+	font-size: 16px;
 	color: #ecf0f1;
+	font-weight: 100;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
 }
 
 #copy {

@@ -425,11 +425,11 @@ function finishDisplay() {
 		
 	for (var test in finalData) {
 			
-		var color = "white";
-		if (finalData[test].mood === "negative") 
-			color = "red";
-		if (finalData[test].mood === "positive")
-			color = "green";
+		//var color = "white";
+		//if (finalData[test].mood === "negative") 
+		//	color = "red";
+		//if (finalData[test].mood === "positive")
+		//	color = "green";
 		//d3.selectAll("#vis").append("p")
 		//	.style("color", color)
 		//	.text(finalData[test].title + ":" + finalData[test].artist + ": " + finalData[test].mood + ": confidence/strength= " + finalData[test].confidence+"/"+finalData[test].strength); //+ finalData[test].lyrics);	
@@ -476,7 +476,7 @@ function finishDisplay() {
 		
 			lastAngle = endAngle;
 			index++;
-		}		
+		}
 		
 		var songInfo = finalData[test].title + " by " + finalData[test].artist;
 		var songEmotion = finalData[test].mood;
@@ -621,6 +621,13 @@ function finishDisplay() {
 		.attr('fill', 'white')
 		.attr('font-size', '24px')
 		.text("Overall:");
+		
+	svg2.append("svg:image")
+		.attr('x', 275)
+		.attr('y', 50)
+		.attr('width', 50)
+		.attr('height', 50)
+		.attr("xlink:href","icons/happy.png");
 		
 	tempY+=24;
 	
