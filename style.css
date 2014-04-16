@@ -64,6 +64,7 @@ h2 img {
 	opacity: 1;
 	background: rgb(246, 159, 175);
 	text-shadow: 1px 1px 2px rgba(255, 1, 133, 1);
+	cursor: pointer;
 }
 
 #header {
@@ -132,10 +133,6 @@ label {
 	font-weight: 100;
 }
 
-#loading_img {
-	margin-top: -30px;
-}
-
 #rss_name {
 	font-weight: 300;
 	font-size: 16px;
@@ -160,4 +157,5 @@ label {
 #copy {
 	font-size: 10px;
 	color: #363A35;
+	margin-bottom: 15px;
 }

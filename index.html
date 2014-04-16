@@ -31,7 +31,7 @@
 			<div id="loading_text"></div>
 		</div>
 		<div id="currentFeel">Right now, America feels: <br/><img src="icons/happyLarge.png"></div>
-		<div id="block">SCROLL&nbsp;&#10549;</div>
+		<div id="block" onMouseDown="pageScroll()">SCROLL&nbsp;&#10549;</div>
 	</div>
 	<h2>Currently Viewing:<br/><img src="icons/Billboard.png"><br/><div id="rss_name"></div></h2>
 	<div id="container">
@@ -39,7 +39,7 @@
 		<div id="vis"></div>
 	</div>
 	<div id="copy">
-	GT CS-4464, 2014 <br/> © David P. Chi, Will Folsom, Chelsea Mitchell 2014 
+	GT CS-4464, 2014 <br/>© David P. Chi, Will Folsom, Chelsea Mitchell 2014 
 	</div>
 	</center>
 	<script type="text/javascript">
@@ -58,6 +58,15 @@
 			var amountMovedY = (e.pageY * -1 / 13);
 			var naviStar = document.getElementById("circle");
 			naviStar.style.backgroundPosition = amountMovedX + "px " + amountMovedY + "px";
+		}
+		
+		var scrolled = false;
+		
+		function pageScroll(){
+			if (scrolled === false) {
+				window.scroll(0,925);
+				scrolled == true;
+			}
 		}
 </script>
 </body>
