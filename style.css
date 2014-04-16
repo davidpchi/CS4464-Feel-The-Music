@@ -14,7 +14,7 @@ h1 {
 	width: 450px;
 	height: 450px;
 	position: relative;
-	top: 150px;
+	top: 25px;
 }
 
 h1 img{
@@ -43,11 +43,11 @@ h2 img {
 	background: #3498db;
 	text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
 	margin: auto;
-	padding: 5px 15px;
+	padding: 7px 20px 7px 25px;
 	text-align: center;
 	vertical-align: center;
 	position: relative; 
-	top: 300px;
+	top: 160px;
 	display: inline-block;
 	border-radius: 5px;
 	-moz-border-radius: 5px;
@@ -80,6 +80,21 @@ h2 img {
 	background: url('vinyl.jpg') fixed 50% 50%;
 	position: relative;
 	/*background-position: -220px -201px;*/
+}
+
+#currentFeel {
+	font-weight: 100;
+	font-style: normal;
+	font-size: 24px;
+	color: #fff;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, 1);
+	margin: auto;
+	position: relative; 
+	top: 90px;
+}
+
+#currentFeel  img{
+	margin-top: 15px;
 }
 
 label {
