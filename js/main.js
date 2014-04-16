@@ -575,6 +575,9 @@ function finishDisplay() {
 	
 	var finalSentimentText = [];
 	
+	var overallX = 300;
+	var overallY = 75;
+	
 	for (var pop in finalEmotionArray) {
 		var ratio = finalEmotionArray[pop]/ finalTotalEmotionsCalc;
 		var endAngle = ratio * 2 * Math.PI + lastAngle;
@@ -590,7 +593,7 @@ function finishDisplay() {
 		(function(pop,test) {
 		svg2.append("path")
 			.attr("d", arc)
-			.attr("transform", "translate(" + 100 + "," + 75 + ")")
+			.attr("transform", "translate(" + overallX + "," + overallY + ")")
 			.style("fill", colorArray[index])
 			.on('mouseover', function(){
 				$("#cust_tooltip").text(pop + ": " + finalEmotionArray[pop]);
@@ -609,8 +612,18 @@ function finishDisplay() {
 		index++;
 	}	
 	
-	var tempX = 220;
-	var tempY = 25; 
+	var tempX = overallX + 100;
+	var tempY = overallY - 50; 
+	
+	svg2.append("text")
+		.attr('x', tempX)
+		.attr('y', tempY)
+		.attr('fill', 'white')
+		.attr('font-size', '24px')
+		.text("Overall:");
+		
+	tempY+=24;
+	
 	for (var i = 0; i < finalSentimentText.length; i++) {
 		svg2.append("text")
 			.attr('x', tempX)
@@ -618,7 +631,7 @@ function finishDisplay() {
 			.attr('fill', colorArray[i])
 			.text(finalSentimentText[i]);
 			
-		tempY+=12;
+		tempY+=14;
 	}
 	
 	//now display the final sentiment text	
