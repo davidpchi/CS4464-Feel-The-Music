@@ -20,18 +20,15 @@
 		$( document ).tooltip();
 	});
 	</script>
-	<style>
-	
-	</style>
 </head>
 <body onload="init()">
 	<center>
-	<div id="header">
-		<h1><img src="icons/circleHeader.png"><br/>Feel the<br/>Music</h1>
+	<div id="header" onmousemove="paraFun(event)">
+		<h1 id="circle"><img src="icons/circleHeader.png"><br/>Feel the<br/>Music</h1>
 		<div id="currentFeel"></div>
 		<div id="block">SCROLL&nbsp;&#10549;</div>
 	</div>
-	<h2>Currently Viewing:<br><div id="rss_name"></div></h2>
+	<h2>Currently Viewing:<br/><img src="icons/Billboard.png"><br/><div id="rss_name"></div></h2>
 	<div id="container">
 		<div id="final_sentiment"></div>
 		<div id="vis"></div>
@@ -55,6 +52,13 @@
 		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
-	</script>
+
+		function paraFun(e) {		
+			var amountMovedX = (e.pageX * -1 / 13);
+			var amountMovedY = (e.pageY * -1 / 13);
+			var naviStar = document.getElementById("circle");
+			naviStar.style.backgroundPosition = amountMovedX + "px " + amountMovedY + "px";
+		}
+</script>
 </body>
 </html>

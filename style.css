@@ -10,7 +10,7 @@ h1 {
 	text-shadow: 2px 2px 2px #3498db;
 	-moz-border-radius: 50%; 
 	border-radius: 50%;
-	background: rgba(0, 0, 0, .42);
+	background: rgba(0, 0, 0, .7) url("icons/noteback.png");
 	width: 450px;
 	height: 450px;
 	position: relative;
@@ -24,8 +24,17 @@ h1 img{
 h2 {
 	font-weight: 100;
 	font-size: 36px;
-	color: #3498db;
+	color: #fff;
+	text-shadow: 2px 2px 2px #3498db;
+	text-align: center;
+	position: relative;
+	background: rgba(0, 0, 0, .7) url("icons/pentagonOutline.png");
 	margin-top: 100px;
+	padding: 30px;
+}
+
+h2 img {
+	margin: 15px 0;
 }
 
 #block {
@@ -72,6 +81,7 @@ h2 {
 	background-color: #ecf0f1; 
 	background: url('vinyl.jpg') fixed 50% 50%;
 	position: relative;
+	/*background-position: -220px -201px;*/
 }
 
 label {
@@ -105,7 +115,8 @@ label {
 #rss_name {
 	font-size: 16px;
 	font-weight: 300;
-	color: #363A35;
+	color: #fff;
+	text-shadow: 1px 1px 2px rgb(246, 159, 175);
 }
 
 #final_sentiment {
