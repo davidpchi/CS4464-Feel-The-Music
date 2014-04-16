@@ -393,6 +393,8 @@ function handleData(finalData) {
 				$('#loading_text').html("Please wait. This may take up to a minute. <br> Processing song " + index + " of " + finalDataLength);
 				//document.getElementById("loading_text").innerHtml = ("Loading item " + index + " of " + finalDataLength);
 				
+				console.log(finalData[test].title + " " + index);
+				
 				if (index == finalDataLength) {
 					finishDisplay();
 				}
