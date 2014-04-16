@@ -640,6 +640,45 @@ function finishDisplay() {
 	document.getElementById('loading').style.display='none';
 }
 
+function getEmotionIcon(mood) {
+	var iconPath = "icons/happy.png";
+	
+	switch (mood) {
+		case "happy":
+			iconPath = "icons/happy.png";
+			break;
+		case "sad":
+			iconPath = "icons/sad.png";
+			break;
+		case "angry":
+			iconPath = "icons/angry.png";
+			break;
+		case "nervous":
+			iconPath = "icons/nervous.png";
+			break;
+		case "jealous":
+			iconPath = "icons/jealous.png";
+			break;
+		case "excited":
+			iconPath = "icons/excited.png";
+			break;
+		case "stressed":
+			iconPath = "icons/stressed.png";
+			break;
+		case "fatigued":
+			iconPath = "icons/fatigued.png";
+			break;
+		case "serene":
+			iconPath = "icons/serene.png";
+			break;
+		case "relaxed":
+			iconPath = "icons/relaxed.png";
+			break;
+	}
+	
+	return iconPath;
+}
+
 function sentimentToColorID(mood) {
 	if (mood ==="happy")
 		return 0;
